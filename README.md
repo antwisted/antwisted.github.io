@@ -1,3 +1,10 @@
-# Antwisted BETA - Proeject 1: Missile Command
+# Antwisted Project #1:
+## Super Missile Command Bros.
+![Mario Versus Bullet](./img/mario_versus_bullet.jpg)
 
-We're sorry, but this area is currently under construction. Please try again later. Msg. 2015-21-4D
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

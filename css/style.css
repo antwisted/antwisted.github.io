@@ -107,11 +107,11 @@ PAGE ELEMENTS
 }
 
 #game_bg {
-
+	font-family: 'emulogicregular';
 }
 
 #back_bg {
-
+	font-family: 'emulogicregular';
 }
 
 .copyright {
@@ -134,9 +134,22 @@ PAGE ELEMENTS
 	padding-bottom: 2rem;
 }
 
+.score {
+
+}
+
+.hscore {
+
+}
+
+.yellow {
+	
+}
+
 body {
 	font-size: 10.5pt;
 	line-height: 1.4;
+	color: #fff;
 }
 
 h1 {
@@ -168,14 +181,20 @@ button {
 	font-size: 1.2rem;
 	background: #ff0000;
 	color: #FFF;
-	
 	text-align: center;
 	border: 1px solid #fff;
 	margin: 20px;
-	padding: 15px 25px;
-	border-radius: 10px;
+	padding: 15px 20px;
+	/*border-radius: 10px;*/
 	box-shadow: 2px 2px #fff;
 }
+
+/***
+JS Switches
+
+#fc_one
+#fc_two
+***/
 
 
 /************
@@ -198,8 +217,12 @@ video#on_play {
     background-size: cover; 
 }
 
+#front_bg {
+	display: none;
+}
+
 #front_container {
-	/* display: none; */
+	display: none; 
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -234,21 +257,32 @@ video#on_play {
 }
 
 #back_bg {
-	display: none;
-	background: url(../img/splash_intro_001.jpg) #fff no-repeat center top fixed;
+	/*display: none; */
+	position: fixed;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -98;
+	background: url(../img/splash_intro_001.jpg) #fff no-repeat center center fixed;
 	background-size: cover;
 }
 
 #back_container {
-	display: none;
+	/* display: none; */
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%); /* translate (-50%, -50%) */
 	min-width: 400px;
-	width: 60%;
+	width: 50%;
 	min-height: 400px;
-	width: 60%;
+	width: 50%;
+	background-color: rgba(0, 0, 0, 0.8);
+	border: 5px solid #ff0000;
+	border-radius: 10px;
+	text-align: center;
+	padding: 3rem 0;
 }
 
 

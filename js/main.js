@@ -20,6 +20,17 @@ $("#how_to").on('click', function(){
 	console.log("'How To Play' button was pressed.");	
 });
 
+$("#play_again").on('click', function(){
+	console.log("'Play Again' button was pressed.");	
+});
+
+$("#go_home").on('click', function(){
+	$("#back_bg").hide();
+	$("#front_bg").show();
+	$("#front_container").show();
+	console.log("'Return Home' button was pressed.");	
+});
+
 // // $(document).ready
 // (function () {
 // 	console.log("Game loaded and linked.")
