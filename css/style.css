@@ -410,24 +410,7 @@ RESPONSIVE MEDIA
     }
 }
 
-@media screen and (max-width: 800px) {
-    #front_bg {
-		position: fixed;
-	    min-width: 100%;
-	    min-height: 100%;
-	    width: auto;
-	    height: auto;
-	    z-index: -97;
-	    background: url(../img/bulletship_attack.jpg) #000 no-repeat center center fixed;
-	    background-size: cover;
-    }
-
-    #on_play {
-        display: none;
-    }
-}
-
-@media (min-width: 800px) and (orientation: landscape) {
+@media screen and (min-device-width: 1024px) and (orientation: landscape) {
     #front_container {
 		top: 27%;
 		left: 27%;
@@ -447,6 +430,23 @@ RESPONSIVE MEDIA
 		min-width: 200px;
 		padding-left: 20px;
 		padding-right: 20px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    #front_bg {
+		position: fixed;
+	    min-width: 100%;
+	    min-height: 100%;
+	    width: auto;
+	    height: auto;
+	    z-index: -97;
+	    background: url(../img/bulletship_attack.jpg) #000 no-repeat center center fixed;
+	    background-size: cover;
+    }
+
+    #on_play {
+        display: none;
     }
 }
 
