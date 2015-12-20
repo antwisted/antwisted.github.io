@@ -413,9 +413,9 @@ RESPONSIVE MEDIA
 @media (orientation: landscape) {
     #front_container {
 		top: 5%;
-		left: 27%;
+		left: 25%;
 		transform: translateX(-6%) translateY(-30%);
-		min-height: 400px;
+		min-height: 450px;
 		height: 50%;
 		min-width: 300px;
 		padding-left: 20px;
@@ -424,7 +424,7 @@ RESPONSIVE MEDIA
 
     #back_container {
 		top: 5%;
-		left: 27%;
+		left: 25%;
 		transform: translateX(-6%) translateY(-30%);
 		min-height: 400px;
 		min-width: 200px;
