@@ -13,22 +13,49 @@ Thanks for visiting! Support GA!
 console.log("Game loaded and linked.")
 
 $("#start").on('click', function(){
+	$("#front_bg").hide();
+	$("#front_container").hide();
+	$("#game_bg").show();
+	$("#game_container").show();
 	console.log("'Start' button was pressed.")
 });
 
 $("#how_to").on('click', function(){
+	$("#fc_one").hide();
+	$("#fc_two").show();
 	console.log("'How To Play' button was pressed.");	
 });
 
-$("#play_again").on('click', function(){
-	console.log("'Play Again' button was pressed.");	
+$("#go_back").on('click', function(){
+	$("#fc_two").hide();
+	$("#fc_one").show();
+	console.log("'Go Back' button was pressed.");
 });
+
+$("#pause").on('click', function(){
+
+	console.log("Game Paused.")
+})
 
 $("#go_home").on('click', function(){
 	$("#back_bg").hide();
+	$("#back_container").hide();
 	$("#front_bg").show();
 	$("#front_container").show();
 	console.log("'Return Home' button was pressed.");	
+});
+
+$("#play_again").on('click', function(){
+	$("#back_bg").hide();
+	$("#back_container").hide();
+	$("#game_bg").show();
+	$("#game_container").show();
+	console.log("'Play Again' button was pressed.");	
+});
+
+$("#quit_game").on('click', function(){
+	var exit = confirm("Are you sure you want to quit?");
+	console.log("User quit option: " + exit);	
 });
 
 // // $(document).ready
