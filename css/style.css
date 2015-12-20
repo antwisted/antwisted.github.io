@@ -283,7 +283,6 @@ video#on_play {
 	display: none;
 	position: fixed;
 	bottom: 0;
-	transform: translateX(0);
 	width: 100%;
 	min-height: 170px;
 	height: 20%;
@@ -320,8 +319,6 @@ video#on_play {
 	text-align: center;
 	padding: 3rem 0;
 }
-
-
 /*
 Splash screen with active bg
 Game bg
@@ -333,7 +330,11 @@ Darkened bg
 GAME ELEMENTS
 ************/
 #mario_sprite {
-
+	position: absolute;
+	background-color: #fff;
+	left: 48%;
+	height: 100px;
+	width: 100px;
 }
 
 #luigi_sprite {
