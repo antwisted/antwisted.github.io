@@ -1,59 +1,92 @@
 <!DOCTYPE html>
 <!-- Thanks for visiting! Support GA! -->
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Antwisted Entertainment | Super missile Command Bros.</title>
+	<title>Antwisted Entertainment | Super Missile Command Bros.</title>
 	<link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-<div id="front_bg">
+
+
+<section id="front_bg">
+
 <video autoplay poster="img/bulletship_attack.jpg" id="on_play">
     <source src="video/bulletship_intro.webm" type="video/webm">
     <source src="video/bulletship_intro.mp4" type="video/mp4">
 </video>
- 	<div id="front_container">
- 		<article id="fc_one">
-	 		<p class="copyright">© 2015 Antwisted Entertainment</p><p class="titlelink"><a style="text-decoration: none; color: #fff;" href="#" target="_blank">Learn More About Us</a></p>
-	 		<div class="box_header">
+ 	
+ 	<article id="front_container">
+ 		<div id="fc_one">
+	 		<p class="copyright"><a style="text-decoration: none; color: #fff;" href="#" target="_blank">Copyright Statement</a></p><!-- <p class="titlelink"><a style="text-decoration: none; color: #fff;" href="#" target="_blank">Learn More</a></p> -->
+	 		<header class="box_header">
 				<h2 style="margin-bottom: -.7rem;">super</h2>
-				<h1 style="color: #ff0000; text-transform: uppercase; font-size: 5rem;">Missile Command</h1>
+				<h1 style="color: #ff0000; text-transform: uppercase; font-size: 5rem; padding: 0 15px;">Missile Command</h1>
 				<h2 style="margin-top: -1.6rem;">bros.</h2>
-			</div>
+			</header>
 			<button id="start">Start Game</button>
 			<button id="how_to">How To Play</button>
-		</article>
-		<article id="fc_two">
+		</div>
+		<div id="fc_two">
 			<h2 class="gametext_med">How To Play:</h2>
 			<br />
 			<p class="gametext_sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 			<button id="go_back">Go Back</button>
-		</article>
-	</div>
-</div>
+		</div>
+	</article>
 
-<div id="game_bg">
-	<div id="game_container">
-		<article id="gc_one">
-		<h2>Missiles Are Coming...</h2>
-		<div id="mario_sprite"></div>
-		</article>
-	</div>
-</div>
+</section>
 
-<div id="back_bg">
-	<div id="back_container">
+
+<section id="game_bg">
+	<div id="time_box">
+		
+	</div>
+	<div id="score_box">
+
+	</div>
+	<div class="blk_missile"></div>
+	<div class="red_missile"></div>
+	<div class="red_missile_flame"></div>
+	<div class="fireball"></div>
+	<div class="explosion"></div>
+	<div class="mushroom"></div>
+	<div class="starpower"></div>
+
+	<article id="game_container"></div>
+
+		<div id="gc_one">
+			<div id="castle_one"></div>
+			<div id="castle_two"></div>
+			<div id="mario_sprite"></div>
+			<div id="luigi_sprite"></div>
+			<div id="castle_three"></div>
+			<div id="castle_four"></div>
+		</div>
+	
+	</article>
+
+</section>
+
+
+<section id="back_bg">
+
+	<article id="back_container">
+
 		<p class="gametext_med">You completed up to:<br/>[level]<br /><br/>
-		Time elapsed:<br/>[counter]</p>
-		<br />
+		Time elapsed:<br/>[counter]</p><br />
 		<p class="gametext_sm">Your Score: [score]</p>
-		<p class="gametext_sm hscore">New High Score!</p>
-		<br />
+		<p class="gametext_sm hscore">New High Score!</p><br />
+
 		<button id="play_again">Play Again!</button>
 		<button id="go_home">Return Home</button>		
-	</div>
-</div>
+
+	</article>
+
+</section>
 
 
 </body>
