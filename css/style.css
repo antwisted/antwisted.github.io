@@ -114,8 +114,24 @@ PAGE ELEMENTS
 
 }
 
+.copyright {
+	display: inline-block;
+	color: #fff;
+	text-align: left;
+	width: 48%;
+	padding: 1%;
+}
+
+.titlelink {
+	color: #fff;
+	text-align: right;
+	display: inline-block;
+	width: 48%;
+	padding: 1%;
+}
+
 .box_header {
-	padding: 3em 0;
+	padding-bottom: 2rem;
 }
 
 body {
@@ -124,32 +140,32 @@ body {
 }
 
 h1 {
-    font-size: 4em;
+    font-size: 3.6rem;
 }
 
 h2 {
-    font-size: 3.6em;
+    font-size: 3rem;
 }
 
 h3 {
-    font-size: 3em;
+    font-size: 2.4rem;
 }
 
 h4 {
-    font-size: 2.4em;
+    font-size: 1.8rem;
 }
 
 h5 {
-    font-size: 1.8em;
+    font-size: 1.4rem;
 }
 
 h6 {
-    font-size: 1.4em;
+    font-size: 1.2rem;
 }
 
 button {
 	font-family: 'emulogicregular', 'Arial', serif;
-	font-size: 1.2em;
+	font-size: 1.2rem;
 	background: #ff0000;
 	color: #FFF;
 	
@@ -189,15 +205,14 @@ video#on_play {
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%); /* translate (-50%, -50%) */
 	min-width: 400px;
-	width: 60%;
-	
+	width: 50%;
 	min-height: 400px;
-	width: 60%;
-	background-color: rgba(0, 0, 0, 0.7);
+	width: 50%;
+	background-color: rgba(0, 0, 0, 0.8);
 	border: 5px solid #fff;
 	border-radius: 10px;
 	text-align: center;
-	/*padding-top: 25px;*/
+	padding-top: 3rem 0;
 }
 
 #game_bg {
