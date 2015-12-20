@@ -260,7 +260,7 @@ video#on_play {
 }
 
 #fc_one {
-	display:block;
+	display:none;
 }
 
 #fc_two {
@@ -283,7 +283,7 @@ video#on_play {
 }
 
 #game_container {
-	display: none;
+	display: none; 
 	position: fixed;
 	bottom: 0;
 	width: 100%;
@@ -295,7 +295,7 @@ video#on_play {
 }
 
 #back_bg {
-	/* display: none; */
+	display: none;
 	position: fixed;
     min-width: 100%;
     min-height: 100%;
@@ -307,7 +307,7 @@ video#on_play {
 }
 
 #back_container {
-	/* display: none; */
+	display: none; 
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -322,11 +322,6 @@ video#on_play {
 	text-align: center;
 	padding: 3rem 0;
 }
-/*
-Splash screen with active bg
-Game bg
-Darkened bg
-*/
 
 
 /************
@@ -335,7 +330,7 @@ GAME ELEMENTS
 #mario_sprite {
 	position: absolute;
 	background-color: #ff0000;
-	left: 47%;
+	left: 45%;
 	height: 100px;
 	width: 100px;
 }
@@ -352,7 +347,7 @@ GAME ELEMENTS
 .fireball {
 	position: absolute;
 	background-color: orange;
-	left: 51%;
+	left: 55%;
 	top: 55%;
 	height: 20px;
 	width: 20px;
@@ -367,8 +362,8 @@ div.blk_missile {
 	position: absolute;
 	background-color: #fff;
 	left: 48%;
-	height: 100px;
-	width: 100px;
+	height: 70px;
+	width: 50px;
 }
 
 div.red_missile {
@@ -414,7 +409,7 @@ RESPONSIVE MEDIA
     #front_container {
 		top: 5%;
 		left: 25%;
-		transform: translateX(-6%) translateY(-30%);
+		transform: translateX(-6%) translateY(-26%);
 		min-height: 470px;
 		height: 70%;
 		min-width: 300px;
