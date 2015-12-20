@@ -412,21 +412,21 @@ RESPONSIVE MEDIA
 
 @media (orientation: landscape) {
     #front_container {
-		top: 10%;
+		top: 5%;
 		left: 27%;
 		transform: translateX(-8%) translateY(-30%);
-		min-height: 650px;
-		height: 80%;
+		min-height: 500px;
+		height: 60%;
 		min-width: 300px;
 		padding-left: 20px;
 		padding-right: 20px;
     }
 
     #back_container {
-		top: 10%;
+		top: 5%;
 		left: 27%;
 		transform: translateX(-6%) translateY(-30%);
-		min-height: 550px;
+		min-height: 500px;
 		min-width: 200px;
 		padding-left: 20px;
 		padding-right: 20px;
