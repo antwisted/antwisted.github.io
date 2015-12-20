@@ -410,9 +410,9 @@ RESPONSIVE MEDIA
     }
 }
 
-@media screen and (min-device-width: 1024px) and (orientation: landscape) {
+@media (orientation: landscape) {
     #front_container {
-		top: 27%;
+		top: 10%;
 		left: 27%;
 		transform: translateX(-8%) translateY(-30%);
 		min-height: 650px;
@@ -423,7 +423,7 @@ RESPONSIVE MEDIA
     }
 
     #back_container {
-		top: 27%;
+		top: 10%;
 		left: 27%;
 		transform: translateX(-6%) translateY(-30%);
 		min-height: 550px;
