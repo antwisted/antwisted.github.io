@@ -211,10 +211,14 @@ button {
 	box-shadow: 2px 2px #fff;
 }
 
+input {
+	display: none;
+	width: 1%;
+	margin: -10em;
+}
 /***
-JS Switches
-
-
+JS buttons:
+#cons_button, #copyright_state, #go_home, #how_to, #pause_game, #play_again, #prompt, #quit_game, #start, .go_back
 ***/
 
 
@@ -239,15 +243,15 @@ video#on_play {
 }
 
 #front_bg {
-	display: none;
+/*	display: none;*/
 }
 
 #front_container {
-	display: none; 
+/*	display: none; */
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	transform: translateX(-50%) translateY(-50%); /* translate (-50%, -50%) */
+	transform: translateX(-50%) translateY(-50%);
 	min-width: 450px;
 	width: 55%;
 	min-height: 450px;
@@ -260,10 +264,15 @@ video#on_play {
 }
 
 #fc_one {
-	display:none;
+/*	display:none;*/
 }
 
 #fc_two {
+	display: none;
+	padding: 3rem;
+}
+
+#fc_three {
 	display: none;
 	padding: 3rem;
 }
@@ -287,9 +296,9 @@ video#on_play {
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	min-height: 170px;
-	height: 20%;
-	background: #000;
+	min-height: 120px;
+	height: 10%;
+	background: transparent;
 	padding: 0;
 	margin: 0;
 }
@@ -311,7 +320,7 @@ video#on_play {
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	transform: translateX(-50%) translateY(-50%); /* translate (-50%, -50%) */
+	transform: translateX(-50%) translateY(-50%);
 	min-width: 400px;
 	width: 50%;
 	min-height: 400px;
@@ -327,6 +336,24 @@ video#on_play {
 /************
 GAME ELEMENTS
 ************/
+#quit_game {
+	position: absolute;
+	background-color: #red;
+	left: 95%;
+	height: 30px;
+	width: 30px;
+}
+
+#time_box {
+	position: absolute;
+	left: 80%;
+}
+
+#score_box {
+	position: absolute;
+	left: 10%;
+}
+
 #mario_sprite {
 	position: absolute;
 	background-color: #ff0000;
@@ -336,7 +363,7 @@ GAME ELEMENTS
 }
 
 #luigi_sprite {
-	/*display: none;*/
+	display: none;
 	position: absolute;
 	background-color: #00ff00;
 	left: 53%;
@@ -347,8 +374,8 @@ GAME ELEMENTS
 .fireball {
 	position: absolute;
 	background-color: orange;
-	left: 55%;
-	top: 55%;
+	left: 50%;
+	top: 80%;
 	height: 20px;
 	width: 20px;
 	z-index: 5;
@@ -357,28 +384,72 @@ GAME ELEMENTS
 .explode {
 
 }
-
-div.blk_missile {
+/*
+.blk_missile_1 {
 	position: absolute;
-	background-color: #fff;
-	left: 48%;
+	background: url();
+	background: #fff;
+	top: 0%;
 	height: 70px;
 	width: 50px;
+	animation-name: blk_missile_1;
+	animation-duration: 7s;
+	animation-iteration-count: 1;
 }
 
-div.red_missile {
+.blk_missile_2 {
+	position: absolute;
+	background: url();
+	top: 0%;
+	height: 70px;
+	width: 50px;
+	animation-name: blk_missile_2;
+	animation-duration: 7s;
+}
+
+.blk_missile_3 {
+	position: absolute;
+	background: url();
+	top: 0%;
+	height: 70px;
+	width: 50px;
+	animation-name: blk_missile_3;
+	animation-duration: 7s;
+}
+
+.blk_missile_4 {
+	position: absolute;
+	background: url();
+	top: 0%;
+	height: 70px;
+	width: 50px;
+	animation-name: blk_missile_4;
+	animation-duration: 7s;
+}
+
+.blk_missle_5 {
+	position: absolute;
+	background: url();
+	top: 0%;
+	height: 70px;
+	width: 50px;
+	animation-name: blk_missile_5;
+	animation-duration: 7s;
+}*/
+
+.red_missile {
 
 }
 
-div.red_missile_flame {
+.red_missile_flame {
 
 }
 
-div.mushroom {
+.mushroom {
 
 }
 
-div.starpower {
+.starpower {
 
 }
 
@@ -393,7 +464,6 @@ RESPONSIVE MEDIA
 		transform: translateX(0%) translateY(-20%);
 		min-height: 600px;
 		height: 60%;
-		/*padding-top: 3rem 0;*/
     }
 
     #back_container {
@@ -478,3 +548,122 @@ RESPONSIVE MEDIA
 		padding-left: 20px;
 		padding-right: 20px;
 }
+
+/*@keyframes mario {
+	0% {
+
+	}
+}
+
+@keyframes luigi {
+	0% {
+	
+	}
+}
+
+@keyframes fireball {
+	0% {
+
+	}
+	75% {
+
+	}
+	100% {
+				
+	}
+}
+
+@keyframe explosion {
+	0% {
+
+	}
+	100% {
+
+	}
+}
+
+@keyframes blk_missile_1 {
+	0% {
+		transform: translate(20, 20);
+	}
+	50% {
+		transform: translate(70, 70);
+	}
+	100% {
+		transform: translate(120, 120);		
+	}
+}
+
+@keyframes blk_missile_2 {
+	0% {
+		transform: translate(40, 40);
+	}
+	50% {
+		transform: translate(90, 90);
+	}
+	100% {
+		transform: translate(220, 220);		
+	}
+}
+
+@keyframes blk_missile_3 {
+	0% {
+		transform: translate(-20, -20);
+	}
+	50% {
+		transform: translate(-70, -70);
+	}
+	100% {
+		transform: translate(-120, -120);		
+	}
+}
+
+@keyframes blk_missile_4 {
+	0% {
+		transform: translate(320, 320);
+	}
+	50% {
+		transform: translate(470, 470);
+	}
+	100% {
+		transform: translate(520, 520);		
+	}
+}
+
+@keyframes blk_missile_5 {
+	0% {
+		transform: translate(-120, -120);
+	}
+	50% {
+		transform: translate(-270, -270);
+	}
+	100% {
+		transform: translate(-320, -320);		
+	}
+}
+
+@keyframes red_missile {
+	100% {
+
+	}
+}
+
+@keyframes red_missile_flame {
+	100% {
+
+	}
+}
+
+@keyframes mushroom {
+	100% {
+
+	}
+}
+
+@keyframes starpower {
+	100% {
+
+	}
+}*/
+
+/* #mario_sprite, #luigi_sprite, .fireball, .explode, .blk_missile, .red_missile, .red_missile_flame, .mushroom, .starpower */
