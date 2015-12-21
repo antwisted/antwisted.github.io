@@ -12,8 +12,8 @@ $(document).ready(function () {
 "use strict";
 console.log("Game loaded and linked.");
 
-// var video = document.querySelector("video");
-// var game_running = false;
+var video = document.querySelector("video");
+var game_running = false;
 $(document).on('keyup', function(e){
 	console.log(e);
 	if (e.keyCode === 27 && game_running) {
@@ -35,44 +35,39 @@ BUTTONS
 	var start_button = $("#start").on('click', function(){
 		$("#front_bg").hide();
 		$("#front_container").hide();
-		// video.pause();
+		video.pause();
 		$("#game_bg").show();
 		$("#game_container").show();
 		play_smcb();
-		return false;
 	});
 	var howto_button = $("#how_to").on('click', function(){
 		$("#fc_one").hide();
 		$("#fc_two").show();
 		console.log("'How To Play' button was pressed.");
-		return false;	
 	});
 	var copyright_state = $("#copyright_state").on('click', function(){
 		$("#fc_one").hide();
 		$("#fc_three").show();
 		console.log("'How To Play' button was pressed.");
-		return false;	
 	});
 	var goback_button = $(".go_back").on('click', function(){
 		$("#fc_two").hide();
 		$("#fc_three").hide();
 		$("#fc_one").show();
 		console.log("'Go Back' button was pressed.");
-		return false;
 	});
 	var pause_game = $("#pause_game").on('click', function(){
 
 		console.log("Game Paused.");
-		return false;
 	});
 	var gohome_button = $("#go_home").on('click', function(){
-		// video.play();
+		video.load();
 		$("#back_bg").hide();
 		$("#back_container").hide();
+		video.play();
 		$("#front_bg").show();
 		$("#front_container").show();
 		$("#fc_one").show();
-		return false;
 	});
 	var playagain_button = $("#play_again").on('click', function(){
 		$("#back_bg").hide();
@@ -81,20 +76,17 @@ BUTTONS
 		$("#game_container").show();
 		play_smcb();
 		console.log("'Play Again' button was pressed.");
-		return false;	
 	});
 	var quit_game = function (){
 		var exit = confirm("Are you sure you want to quit?");
 		if (exit) {
 			game_running = false;
-			// video.load();
 			$("#game_bg").hide();
 			$("#game_container").hide();
 			$("#back_bg").show();
 			$("#back_container").show();
 		}
 		console.log("User quit option: " + exit);
-		return false;
 	};
 
 
@@ -111,7 +103,8 @@ GAME BODY
 	var time_lapse = 0, min = 0, missiles_present = 0, time_output;
 
 	
-	var time_val = function (){	
+	var time_val = function (){
+		time_lapse++;	
 		if (time_lapse <= 9) {
 			time_output = "0"+min+":0"+time_lapse;
 		} else if (time_lapse >= 59) {
@@ -120,7 +113,6 @@ GAME BODY
 			min++
 			time_output = "0"+min+":00";
 		}
-		time_lapse++;
 		time_e.innerHTML = "TIME</br>"+time_output;
 	};
 
@@ -161,17 +153,24 @@ GAME BODY
 		// return game_running;
 		// }
 
+			var randomizer = function(){
+				var pick = Math.round(Math.random() * 7);
+				var random = ["blk_one", "blk_two", "blk_three", "blk_four", "blk_five", "blk_six", "blk_seven"];
+				return random[pick]
+			}
+
 			var create_blk = function(){
-				var bullet_boy = Math.round(Math.random() * 5);
-				var blk = $("<div class='blk_missle_"+bullet_boy+"'></div>");
+				var blk = $("<div class='blk_missle'></div>");
+				blk.css({"animation": "ease-in 7s 1 normal forward running "+randomizer()})
 			    game_area.append(blk);
 			    missiles_present += 1;
 
 			    // blk.css("top", Math.random() * window.innerHeight);
-			    blk.css("left", Math.random() * window.innerWidth);
+			    // blk.css("left", Math.random() * window.innerWidth);
 
 			    blk.on("click", function() {
 		      		setTimeout(function() {
+		        		blk.fadeTo(1000, 0)
 		        		blk.remove();
 		        		missles_present -= 1;
 		      			}, 1000);
@@ -187,15 +186,16 @@ GAME BODY
 				game_area.append(fireball);
 				
 				fireball.css({
-					"transform": "translate(" + e.clientX + ", " + e.clientY + ")",
+					"transform": "rotate(360deg) skew(" + e.clientX + ", " + e.clientY +")",
 					"animation-duration": "2s"
 				});
 				
 				fireball.on("mousemove", function() {
 		      		setTimeout(function() {
+		      			fireball.fadeTo(1000, 0)
 		        		fireball.remove();
 		      			}, 2200);
-		    		});
+		    	});
 
 				if (missiles_present < 7) {
 					create_blk();
@@ -213,44 +213,46 @@ GAME BODY
 				create_fireball(e);
 			});
 
+			// if (i = 2) {
+			// clearInterval(time_val, 1000);	
+			// bg_music.pause();
+		 	// video.load();
+			// $("#game_bg").hide();
+			// $("#game_container").hide();
+			// $("#back_bg").show();
+			// $("#back_container").show();
+			// return game_running = false;
+			// }
+
 	};
 
 
 /************
 CONSTRUCTION AREA
 ************/
-	// video.pause();
-	// var construction_msg = document.getElementsByTagName("h1")[0],
-	// 	cons_button = $("<button>, {'id': 'cons_button'}")
-	// 		.on('click', function(){
-	// 			$(construction_msg).hide();
-	// 			// $("#game_bg").show();
-	// 			// $("#game_container").show();
-	// 			// play_smcb();
-	// 			video.play();
-	// 			$("#front_bg").show();
-	// 			$("#front_container").show();
-	// 			$("#fc_one").show();
-	// 			console.log("Construction Button Removed.")
-	// 			return false;		
-	// 		})
-	// 		.css({"color": "#fff", "background-color": "#fff"})
-	// 		.text("x");
-	// $(construction_msg).append(cons_button);
+	video.pause();
+	var construction_msg = document.getElementsByTagName("h1")[0],
+		cons_button = $("<button>, {'id': 'cons_button'}")
+			.on('click', function(){
+				$(construction_msg).hide();
+				// $("#game_bg").show();
+				// $("#game_container").show();
+				// play_smcb();
+				video.play();
+				$("#front_bg").show();
+				$("#front_container").show();
+				$("#fc_one").show();
+				console.log("Construction Button Removed.")
+				return false;		
+			})
+			.css({"color": "#fff", "background-color": "#fff"})
+			.text("x");
+	$(construction_msg).append(cons_button);
 
 /************
 ************/
 
-		// if (i = 2) {
-		// clearInterval(time_val, 1000);	
-		// bg_music.pause();
-	 // 	video.load();
-		// $("#game_bg").hide();
-		// $("#game_container").hide();
-		// $("#back_bg").show();
-		// $("#back_container").show();
-		// return game_running = false;
-		// }
+		//
 
 });
 
