@@ -363,55 +363,35 @@ GAME ELEMENTS
 	width: 50px;
 }
 
-/*.blk_missile_2 {
-	position: absolute;
-	background: url();
-	top: 0%;
-	height: 70px;
-	width: 50px;
-	animation-name: blk_missile_2;
-	animation-duration: 7s;
-}
-
-.blk_missile_3 {
-	position: absolute;
-	background: url();
-	top: 0%;
-	height: 70px;
-	width: 50px;
-	animation-name: blk_missile_3;
-	animation-duration: 7s;
-}
-
-.blk_missile_4 {
-	position: absolute;
-	background: url();
-	top: 0%;
-	height: 70px;
-	width: 50px;
-	animation-name: blk_missile_4;
-	animation-duration: 7s;
-}
-
-.blk_missle_5 {
-	position: absolute;
-	background: url();
-	top: 0%;
-	height: 70px;
-	width: 50px;
-	animation-name: blk_missile_5;
-	animation-duration: 7s;
-}*/
-
 .red_missile {
-
+/*	position: absolute;
+	background: url();
+	background: #000;
+	top: 0%;
+	height: 70px;
+	width: 50px;*/
 }
 
-.red_missile_flame {
-
+.fire_missile {
+/*	position: absolute;
+	background: url();
+	background: #000;
+	top: 0%;
+	height: 70px;
+	width: 50px;*/
 }
 
 .mushroom {
+/*	position: absolute;
+	background: url();
+	background: pink;
+	top: 0%;
+	left: 50;
+	height: 100px;
+	width: 100px;*/
+}
+
+.fireflower {
 
 }
 
@@ -513,6 +493,7 @@ RESPONSIVE MEDIA
 		min-width: 260px;
 		padding-left: 20px;
 		padding-right: 20px;
+	}
 }
 
 @keyframes mario {
@@ -536,7 +517,7 @@ RESPONSIVE MEDIA
 	}
 }
 
-@keyframe explosion {
+@keyframes explosion {
 	0% {
 
 	}
@@ -547,8 +528,7 @@ RESPONSIVE MEDIA
 
 @keyframes blk_one {
 	0% {
-		left: 25%;
-
+		background-color: red;
 		/*transform: translate(20, 20);*/
 	}
 	50% {
@@ -558,8 +538,7 @@ RESPONSIVE MEDIA
 		/*transform: translate(70, 70);*/
 	}
 	100% {
-		left: 85%;
-		top: 85%;
+		 background-color: blue;
 		/*transform: translate(120, 120);*/		
 	}
 }
@@ -624,7 +603,6 @@ RESPONSIVE MEDIA
 @keyframes blk_five {
 	0% {
 		left: 20%;
-
 		/*transform: translate(20, 20);*/
 	}
 	50% {
@@ -684,7 +662,7 @@ RESPONSIVE MEDIA
 	}
 }
 
-@keyframes red_missile_flame {
+@keyframes fire_missile {
 	100% {
 
 	}
@@ -696,10 +674,14 @@ RESPONSIVE MEDIA
 	}
 }
 
+@keyframes fireflower {
+	100% {
+
+	}
+}
+
 @keyframes starpower {
 	100% {
 
 	}
-}*/
-
-/* #mario_sprite, #luigi_sprite, .fireball, .explode, .blk_missile, .red_missile, .red_missile_flame, .mushroom, .starpower 
+}

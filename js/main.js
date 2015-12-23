@@ -7,7 +7,7 @@ Slack: @antwisted
 Thanks for visiting! Support GA!
 ************************************/
 
-$(document).ready(function () {
+$(document).ready(function(){
 
 "use strict";
 console.log("Game loaded and linked.");
@@ -19,7 +19,7 @@ $(document).on('keyup', function(e){
 	if (e.keyCode === 27 && game_running) {
 		quit_game();
 	}
-	return false;
+return false;
 });
 
 /************
@@ -32,6 +32,7 @@ AUDIO CONTROLS
 /************
 BUTTONS
 ************/
+	// Front Page: Initiate Game
 	var start_button = $("#start").on('click', function(){
 		$("#front_bg").hide();
 		$("#front_container").hide();
@@ -40,26 +41,23 @@ BUTTONS
 		$("#game_container").show();
 		play_smcb();
 	});
+	// Front Page: How To Button
 	var howto_button = $("#how_to").on('click', function(){
 		$("#fc_one").hide();
 		$("#fc_two").show();
-		console.log("'How To Play' button was pressed.");
 	});
+	// Front Page: Copyright Statement
 	var copyright_state = $("#copyright_state").on('click', function(){
 		$("#fc_one").hide();
 		$("#fc_three").show();
-		console.log("'How To Play' button was pressed.");
 	});
+	// Front Page: Go Back Button
 	var goback_button = $(".go_back").on('click', function(){
 		$("#fc_two").hide();
 		$("#fc_three").hide();
 		$("#fc_one").show();
-		console.log("'Go Back' button was pressed.");
 	});
-	var pause_game = $("#pause_game").on('click', function(){
-
-		console.log("Game Paused.");
-	});
+	// Back Page: Return Start Page
 	var gohome_button = $("#go_home").on('click', function(){
 		video.load();
 		$("#back_bg").hide();
@@ -69,15 +67,21 @@ BUTTONS
 		$("#front_container").show();
 		$("#fc_one").show();
 	});
+	// Back Page: Play Again Button
 	var playagain_button = $("#play_again").on('click', function(){
 		$("#back_bg").hide();
 		$("#back_container").hide();
 		$("#game_bg").show();
 		$("#game_container").show();
 		play_smcb();
-		console.log("'Play Again' button was pressed.");
 	});
-	var quit_game = function (){
+	// Game Page: Pause Game Button
+		var pause_game = $("#pause_game").on('click', function(){
+
+		console.log("Game Paused.");
+	});
+	// Game Page: Quit Function
+	var quit_game = function(){
 		var exit = confirm("Are you sure you want to quit?");
 		if (exit) {
 			game_running = false;
@@ -97,88 +101,143 @@ GAME BODY
 	$(score_box).html("<p id='score_box' class='gametext_med'>MARIO</br>000000</p>");
 	var time_box = $("#time_box");
 	$(time_box).html("<p id='time_box' class='gametext_med'>TIME</br>00:00</p>");
-	var score_e = $("#score");
-	var time_e = $("time");
+	var score_e = $("#score_");
+	var time_e = $("#time");
 	var game_area = $("#game_bg");
-	var time_lapse = 0, min = 0, missiles_present = 0, time_output;
+	var time_lapse = 0,
+		min = 0,
+		missiles_present = 0,
+		score_amount = 0,
+		clockbreaker = false,
+		time_output, score_output;
 
-	
-	var time_val = function (){
+	// In Game: Time Function
+	var time_val = function(){
 		time_lapse++;	
 		if (time_lapse <= 9) {
 			time_output = "0"+min+":0"+time_lapse;
-		} else if (time_lapse >= 59) {
+		} else if (time_lapse <= 59) {
 			time_output = "0"+min+":"+time_lapse;
 		} else if (time_lapse === 60) {
-			min++
+			min++;
+			time_lapse = 0;
 			time_output = "0"+min+":00";
+		} else if (min % 10 === 0) {
+			hrs++;
+			min = 0;
+			time_output = hrs+"0:00";
+		} else if (hrs === 10) {
+			time_box.html("<p id='time_box' class='gametext_med'>TIME</br>99:99 - YOU BROKE THE CLOCK!</p>");
+			clockbreaker = true;
+			return clearInterval(tick);
 		}
-		time_e.innerHTML = "TIME</br>"+time_output;
+		
+		if (game_running) {
+		time_box.html("<p id='time_box' class='gametext_med'>TIME</br>" + time_output + "</p>");
+		} else {
+			console.log("Will display time value for end game.");
+		}
+
 	};
 
-	var time = function(){
-		return setInterval(time_val, 1000);	
+	// In Game: Initiate Time
+	var runtime = function(tick){
+		if (clockbreaker) {
+			return console.log("The force is strong with this one...")
+		}
+	return setInterval(tick, 1000);	
 	};
-	time();
 
-	var score_val = function (){
-		var score_amount = 0;
-		var blk = $(".blk_missile");
-		var red = $(".red_missile");
-		var fire = $(".red_missile_fire");
-		var blk_hit = $(blk).on('click', function(){
-		});
-		var red_hit = $(red).on('click', function(){
-		});
-		var fire_hit = $("#red_missile_fire").on('click', function(){
-		});
+	// In Game: Score Function
+	var score_val = function(score){
+		var val = score.toString();
+		for (var j = 6; val.length < j;) {
+			val = "0" + val;
+		}
+		
+		if (game_running) {
+		score_box.html("<p id='score_box' class='gametext_med'>MARIO</br>" + val + "</p>");
+		} else {
+			console.log("Will display score value for end game.");
+		}
 	}
 
-
+	// In Game: Processes
 	var play_smcb = function(){
 		game_running = true;
-		console.log("Game running status: "+game_running);
+		runtime(time_val);
+		console.log("Game running status: " + game_running);
 
 		// var bg_music = new Audio('.../audio/bro_music.mp3');
 		// bg_music.play();
 		$("#quit_game").on('click', quit_game);
 
-
-		// var max_missiles = 18;
-		// for (var i = 0; i < max_missiles.length; i++) {
-		// }		
-
-		// game_running = false;
-		// console.log(game_running);
-		// return game_running;
-		// }
-
 			var randomizer = function(){
 				var pick = Math.round(Math.random() * 7);
-				var random = ["blk_one", "blk_two", "blk_three", "blk_four", "blk_five", "blk_six", "blk_seven"];
-				return random[pick]
-			}
+				var random = ["blk_one", "blk_two", "blk_three", "blk_four", "blk_five", "blk_six", "blk_seven", "blk_eight", "blk_nine", "blk_ten", "blk_eleven", "blk_twelve"];
+			return random[pick];
+			};
 
 			var create_blk = function(){
-				var blk = $("<div class='blk_missle'></div>");
-				blk.css({"animation": "ease-in 7s 1 normal forward running "+randomizer()})
+				var blk = $("<div class='blk_missile'></div>");
+				blk.css({
+					"animation-name": randomizer(), "animation-duration": "7s"
+					// "animation": "ease-in 7s 1 normal forward running"
+				});
+				// blk.css({"animation-name": "blk_one", "animation-duration": "3s"})
 			    game_area.append(blk);
 			    missiles_present += 1;
-
+			    console.log("Game area value: " + game_area);
+			    console.log("Missle present value: " + missiles_present);
 			    // blk.css("top", Math.random() * window.innerHeight);
 			    // blk.css("left", Math.random() * window.innerWidth);
 
 			    blk.on("click", function() {
+			    	score_amount += 20;
+			    	console.log(score_amount);
+			    	score_val(score_amount);
 		      		setTimeout(function() {
 		        		blk.fadeTo(1000, 0)
 		        		blk.remove();
-		        		missles_present -= 1;
+		        		missiles_present -= 1;
 		      			}, 1000);
 		    		});
-
-			    // blk.css("bottom", Math.random() * window.innerHeight);
-		    	// blk.css("left", Math.random() * window.innerWidth);
 		    return blk;
+			};
+
+			var create_red = function(){
+				var red = $("<div class='red_missile'></div>");
+				red.css({"animation": "ease-in 7s 1 normal forward running " + randomizer()})
+			    game_area.append(red);
+			    missiles_present += 1;
+
+			    red.on("click", function() {
+			    	score_amount += 50;
+			    	score_val(score_amount);
+		      		setTimeout(function() {
+		        		red.fadeTo(1000, 0)
+		        		red.remove();
+		        		missiles_present -= 1;
+		      			}, 1000);
+		    		});
+		    return red;
+			};
+
+			var create_fire = function(){
+				var fire = $("<div class='fire_missile'></div>");
+				fire.css({"animation": "ease-in 7s 1 normal forward running " + randomizer()})
+			    game_area.append(fire);
+
+			    fire.on("click", function() {
+			    	score_amount += 140;
+			    	score_val(score_amount);
+		      		setTimeout(function() {
+		        		fire.fadeTo(1000, 0)
+		        		fire.remove();
+		        		missiles_present -= 1;
+		      			}, 1000);
+		    		});
+		    return fire;
 			};
 
 			var create_fireball = function(e){
@@ -186,7 +245,7 @@ GAME BODY
 				game_area.append(fireball);
 				
 				fireball.css({
-					"transform": "rotate(360deg) skew(" + e.clientX + ", " + e.clientY +")",
+					"transform": "rotate(360deg) translate(" + e.clientX + ", " + e.clientY + ")",
 					"animation-duration": "2s"
 				});
 				
@@ -196,14 +255,28 @@ GAME BODY
 		        		fireball.remove();
 		      			}, 2200);
 		    	});
+		    return fireball;
+		    };
 
-				if (missiles_present < 7) {
-					create_blk();
-				}
+		    var create_multiplier = function(){
 
-			return fireball;
-			};
+		    }
 
+		    var create_boo = function(){
+
+		    }
+
+		    var create_wario = function(){
+
+		    }
+
+		    var create_bowser = function(){
+
+		    }
+
+			if (missiles_present < 7) {
+				create_blk();
+			}
 
 			for (var i = 0; i < 7; i++) {
 		  		create_blk();
@@ -213,6 +286,15 @@ GAME BODY
 				create_fireball(e);
 			});
 
+		// var yDeg = calc_angle(start_point, end_point);
+		// var have_missile_rotate = $(x).css({ // PAIR TO (LGest trans to SMest)
+		// transition: rotate(yDeg @ angle of descent)
+		// time.fight_back //laser && PAIR TO time.elapsed += frequency++
+		// if (time > z.elapsed)
+		// 	+ enemy_missile();
+
+			// if (clockbreaker) {
+				// console.log("Must capture time value or display for clockbreakers.");
 			// if (i = 2) {
 			// clearInterval(time_val, 1000);	
 			// bg_music.pause();
@@ -228,7 +310,7 @@ GAME BODY
 
 
 /************
-CONSTRUCTION AREA
+EASTER EGG MODE
 ************/
 	video.pause();
 	var construction_msg = document.getElementsByTagName("h1")[0],
@@ -243,87 +325,10 @@ CONSTRUCTION AREA
 				$("#front_container").show();
 				$("#fc_one").show();
 				console.log("Construction Button Removed.")
-				return false;		
+			return false;		
 			})
 			.css({"color": "#fff", "background-color": "#fff"})
 			.text("x");
 	$(construction_msg).append(cons_button);
 
-/************
-************/
-
-		//
-
 });
-
-/************
-************/
-
-		// setInterval(function(){
-		// 		i++;
-		// 		console.log(i);
-		// 	}, 10000);
-
-// 	/* BASE */
-// 	var ground = $("#container"),
-// 		missile = $("#missile"),
-// 		enemy_missile = $("enemy_missile"), //laser
-// 		score = 0,
-// 		high_score = 0;
-
-
-
-// 		if (score > high_score) {
-// 			high_score = score;
-// 		}
-// 	return high_score;
-// 	}; */
-// };
-
-// 	/* FUNC */
-// 	(function () {
-// 		window.innerWidth = "";
-// 		window.innerHeight = "";
-// 		$("div_area").click() = remove_missile.animate;
-// 		// transition to explosion,
-// 		// 	transition to .hide() 
-
-// 		if (missile === hits_ground){
-// 			return game_end();
-// 		}
-
-// 		var yDeg = calc_angle(start_point, end_point);
-// 		var have_missile_rotate = $(x).css({ // PAIR TO (LGest trans to SMest)
-// 			// transition: rotate(yDeg @ angle of descent)
-// 		})
-
-// 		time.fight_back //laser && PAIR TO time.elapsed += frequency++
-// 		if (time > z.elapsed) {
-// 			enemy_missile();
-// 		}
-
-// 	// 	enemy_missile.animate { //laser, consider setTimeout()
-// 	// 		console.log("pending")
-// 	// 	}
-// 	// })
-
-// 	/* FIN */
-// 	// (function () {
-// 	// 	missiles @ screen top
-// 	// 	(LGest transition to SMest) && // 2D design, only top to bottom && PAIR TO ** have_missile_rotate = $(x).css
-// 	// 	time.elapsed += frequency++ // PAIR TO time.fight_back
-
-// 	// 	missile.animate {
-// 	// 		$("LG to SM");
-// 	// 		$("#random_angle") && !(off_screen)
-// 	// 	}
-
-// 	// 	alert("Your score is " + score + "!");
-// 	// })
-
-// //end
-// // }	
-// )
-// 	+ set_cookie = function(){
-
-
