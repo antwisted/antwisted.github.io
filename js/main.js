@@ -7,7 +7,7 @@ Slack: @antwisted
 Thanks for visiting! Support GA!
 ************************************/
 
-$(document).ready() // function(){
+$(document).ready(function(){
 
 	"use strict";
 	console.log("Game loaded and linked.");
@@ -15,13 +15,6 @@ $(document).ready() // function(){
 
 	var video = document.querySelector("video");
 	var game_running = false;
-	$(document).on('keyup', function(e){
-		console.log(e);
-		if (e.keyCode === 27 && game_running) {
-			quit_game();
-		}
-	return false;
-	});
 	var firepoint = $("<style>").text("@keyframes fireball { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg) translate(20, 20); } }");
 	$("head").append(firepoint);
 	video.play();
@@ -64,22 +57,26 @@ BUTTONS
 		$("#game_container").show();
 		play_smcb();
 	});
+
 	// Front Page: How To Button
 	var howto_button = $("#how_to").on('click', function(){
 		$("#fc_one").hide();
 		$("#fc_two").show();
 	});
+
 	// Front Page: Copyright Statement
 	var copyright = $("#copyright").on('click', function(){
 		$("#fc_one").hide();
 		$("#fc_three").show();
 	});
+
 	// Front Page: Go Back Button
 	var goback_button = $(".go_back").on('click', function(){
 		$("#fc_two").hide();
 		$("#fc_three").hide();
 		$("#fc_one").show();
 	});
+
 	// Back Page: Return Start Page
 	var gohome_button = $("#go_home").on('click', function(){
 		video.load();
@@ -90,6 +87,7 @@ BUTTONS
 		$("#front_container").show();
 		$("#fc_one").show();
 	});
+
 	// Back Page: Play Again Button
 	var playagain_button = $("#play_again").on('click', function(){
 		$("#back_bg").hide();
@@ -98,28 +96,12 @@ BUTTONS
 		$("#game_container").show();
 		play_smcb();
 	});
-	// Game Page: Pause Game Button
-	var pause_game = $("#pause_game").on('click', function(){
-		alert("The game has been paused. Press okay to return to the game.");
-	});
-	// Game Page: Quit Function
-	var quit_game = function(){
-		var exit = confirm("Are you sure you want to quit?");
-		if (exit) {
-			game_running = false;
-			$("#game_bg").hide();
-			$("#game_container").hide();
-			$("#back_bg").show();
-			$("#back_container").show();
-		}
-		console.log("User quit option: " + exit);
-	};
 
 
 /************
 GAME BODY
 ************/
-// var play_smcb = function(){
+var play_smcb = function(){
 
 	// In Game: Default Variables
 	var score_box = $("#score_box");
@@ -142,16 +124,45 @@ GAME BODY
 		clockbreaker = false,
 		clock, time_output, score_output, missile_run, random, pick, blk, red, fire, val;
 
+    // Game Page: Pause Game Button
+	var pause_game = $("#pause_game").on('click', function(){
+		alert("The game has been paused. Press okay to return to the game.");
+	});	
+
+	// Game Page: Quit Function
+	var quit_game = function(){
+		var exit = confirm("Are you sure you want to quit?");
+		if (exit) {
+			clearInterval(clock);
+			$("#game_bg").hide();
+			$("#game_container").hide();
+			$("#back_bg").show();
+			$("#back_container").show();
+		}
+		console.log("User quit option: " + exit);
+		return game_running = false;
+	};
+	// Game Page: Quit With Esc Key
+    $(document).on('keyup', function(e){
+		console.log(e);
+		if (e.keyCode === 27 && game_running) {
+			quit_game();
+		}
+	return false;
+	});
+	
+	// Game Page: Game End
     var endgame = function(){
+    	clearInterval(clock);
 		return game_running = false;
     };
-
+	
 	// In Game: Time Function
 	var time_val = function(){
 		time_lapse++;
 		sec++;	
 		
-		// Clock Process
+		// Clock Processes
 		if (sec <= 9) {
 			time_output = hrs+""+min+":0"+sec;
 		} else if (sec <= 59) {
@@ -164,15 +175,15 @@ GAME BODY
 			if (min % 10 === 0) {
 				hrs++;
 				min = 0;
+
+				// Clock Breaker - Spec. Infinity Mode
+				if (hrs === 10) {
+					time_box.html("<p id='time_box' class='gametext_med'>CLOCKBREAKER!<br />99:99</p>");
+					clockbreaker = true;
+					return clearInterval(clock);
+				}
 				time_output = hrs+"0:00";
 			}
-		}
-
-		// Clock Breaker		
-		if (hrs === 10) {
-			time_box.html("<p id='time_box' class='gametext_med'>TIME<br />99:99<br />YOU BROKE THE CLOCK!</p>");
-			clockbreaker = true;
-			return clearInterval(clock);
 		}
 
 		// Display Output
@@ -231,8 +242,8 @@ GAME BODY
 	var create_blk = function(){
 		blk = $("<div class='blk_missile'></div>");
 		blk.css({
-			"animation-name": randomizer("b"),
-			"animation-duration": "7s"
+			"animation": randomizer("b"),
+			"animation-duration": "17s"
 			// "animation": "ease-in 7s 1 normal forward running"
 		});
 		// blk.css({"animation-name": "blk_one", "animation-duration": "3s"})
@@ -244,15 +255,17 @@ GAME BODY
 
 	    blk.on("click", function() {
 	    	score_amount += 20;
-	    	console.log(score_amount);
 	    	score_val(score_amount);
-      		setTimeout(function() {
-        		blk.fadeOut(2000);
-        		// blk.remove();
-        		missiles_present -= 1;
-        		destroyed += 1;
-      			}, 5000);
-    		});
+	    	missiles_present -= 1;
+        	destroyed += 1;
+        	blk.off("click");
+
+        	var q = function(){
+			blk.fadeTo(400, 0);
+			}
+			setTimeout(q, 100);
+			blk.remove();
+			});
     return false;
 	};
 
@@ -381,10 +394,10 @@ GAME BODY
 		firepoint[0].innerHTML = "@keyframes fireball { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg) translate(" + x +  "," + y + "); } }";
 		game_area.append(fireball);
 		var f = function(){
-			fireball.fadeTo(20000, 0);
+			fireball.fadeTo(1000, 0);
         	// fireball.remove();
 		}
-		setTimeout(f, 10000);
+		setTimeout(f, 800);
     return false;
     };
 
@@ -446,5 +459,5 @@ GAME BODY
 	// $("#back_container").show();
 	// return game_running = false;
 
-	// }
-// });
+	}
+});
