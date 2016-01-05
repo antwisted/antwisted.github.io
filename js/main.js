@@ -383,6 +383,10 @@ var play_smcb = function(){
 	return level;
 	};
 
+	var create_level=function(missiles, speed, damage_required) {
+		// then gen the level based on that
+	}
+
 	var create_fireball = function(x, y){
 		var fireball = $("<div class='fireball'></div>");
 		fireball.css({
@@ -460,4 +464,18 @@ var play_smcb = function(){
 	// return game_running = false;
 
 	}
+
+	// THESE FUNCTIONS SHOULD CONTROL MOST OF THE GAME
+
+	function start_game() {
+		// should initiate the game
+		// should set up the initial game state
+		// should launch the first level
+		// MAYBE should control subsequent levels
+		// might instead want to call "play_game" as a loop, and wait for it to return a value letting you end the loop
+			// like a do...while x = false, where x is a value returned from function play_game() {}
+	}
+
+
+
 });
