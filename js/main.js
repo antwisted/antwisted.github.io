@@ -7,6 +7,18 @@ Slack: @antwisted
 Thanks for visiting! Support GA!
 ************************************/
 
+// The remove() method removes the selected elements,
+// including all text and child nodes.
+// This method also removes data and events of the selected elements.
+// To remove the elements without removing data and events,
+// use the detach() method instead. To remove only the content from
+// the selected elements, use the empty() method.
+// Usage:
+// $("button").click(function(){
+//     $("p").remove();
+// });
+
+
 $(document).ready(function(){
 
 	"use strict";
