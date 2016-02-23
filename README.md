@@ -1,5 +1,3 @@
-# Antwisted Project #1:
-## Super Missile Command Bros.
-![Mario Versus Bullet](./img/mario_versus_bullet.jpg)
+# GA Projects: Round 1
 
-Missile Command is a 1980 arcade game by Atari, Inc. that was also licensed to Sega for European release. It is considered one of the most notable games from the Golden Age of Video Arcade Games. This game has been reimagined from the perspective of Nintendo's Super Mario Bros. Help Mario save the remaining castles in the Mushroom Kingdom!
+Welcome to my repo. In an effort to explore various functions and nuances in JavaScript, I've opted to complete all game projects offered to my Cohort at GA. Please feel free to browse through the code. Thanks for visiting!
