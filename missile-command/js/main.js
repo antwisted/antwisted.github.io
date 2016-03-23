@@ -29,13 +29,13 @@ $(document).ready(function (){
 	// var firepoint = $("<style>").text("");
 	// $("head").append(firepoint);
 	
-	// video.play();
-	// $("#front_bg").show();
-	// $("#front_container").show();
-	// $("#fc_one").show();
-	video.pause();
-	$("#game_bg").show();
-	$("#game_container").show();
+	video.play();
+	$("#front_bg").show();
+	$("#front_container").show();
+	$("#fc_one").show();
+	// video.pause();
+	// $("#game_bg").show();
+	// $("#game_container").show();
 
 
 /************
@@ -126,13 +126,13 @@ var play_smcb = function (){
 
 	// In Game: Audio Variables
 	var yahoo = new Audio("./audio/sm64_mario_yahoo.wav"),
-		here_we_go = new Audio("./audio/sm64_mario_here_we_go.wav")
+		here_we_go = new Audio("./audio/sm64_mario_here_we_go.wav"),
 		bg_lvl1 = new Audio("./audio/ground-theme.mp3"),
 		bg_lvl2 = new Audio("./audio/13-super-mario-rap.mp3"),
 		lvl_clear = new Audio("./audio/04-area-clear.mp3"),
 		game_clear = new Audio("./audio/04-level-clear.mp3"),
 		power_up = new Audio("./audio/03-power-up.mp3"),
-		life_up = new Audio("./audio/18-1-up.mp3")
+		life_up = new Audio("./audio/18-1-up.mp3"),
 		star_time = new Audio("./audio/07-invincible-starman.mp3"),
 		mario_down = new Audio("./audio/15-1-down.mp3"),
 		game_over = new Audio("./audio/16-game-over.mp3");
@@ -316,19 +316,19 @@ var play_smcb = function (){
 				case 1:
 					x = missile.blk.css({
 						"animation": randomizer("b"),
-						"animation-duration": "7s"
+						"animation-duration": "9s"
 					});
 					break
 				case 2:
 					x = missile.red.css({
 						"animation": randomizer("b"),
-						"animation-duration": "7s"
+						"animation-duration": "9s"
 					});
 					break
 				case 3:
 					x = missile.fire.css({
 						"animation": randomizer("b"),
-						"animation-duration": "7s"
+						"animation-duration": "9s"
 					});
 					break
 				default:
@@ -341,7 +341,11 @@ var play_smcb = function (){
 
     missiles_present += 1;
     deployed += 1;
-    return game_area.append(x);
+    game_area.append(x);
+    var expire = function (){
+    	x.remove();
+    }
+    return setTimeout(expire, 7000);
 	};
 
 	// Create functioning Missile destroyed action
@@ -354,12 +358,28 @@ var play_smcb = function (){
     e.remove();
   });
 
-	var launch = function (population){
-		while (population < 7) {
+	// Almost missile logic...
+	var launch = function (){
+		var fire_away = function (){
 			create_missile();
 		}
-	return missiles_present = 7;
+
+		if (missiles_present < 7){
+			setInterval(fire_away, 700);
+		}
+
+		if (missile_present > 7){
+			clearInterval(fire_away);
+			return false;
+		}
+
+		var hold_it = function (){
+			return launch();
+		}
+	setTimeout(hold_it, 10000);
 	};
+
+	// setInterval(launch)
 
 	var create_fireball = function(x, y){
 		var fireball = $("<div class='fireball'></div>");
@@ -415,8 +435,7 @@ var play_smcb = function (){
 		if ((deployed > 150) && (deployed < 400)) {	
 			level = 3;
 		}
-		if !(current_lvl === level) {
-
+		if (current_lvl !== level) {
 			launch();
 		}
 
@@ -488,17 +507,17 @@ var play_smcb = function (){
 		};
 	});
 	
-	var game = function (){
-		missile_run = dispatch();
-		if (missile_run === 1) {
-			console.log("Additional logic for level 1");
-		} else if (missile_run === 2) {
-			console.log("Additional logic for level 2");
-		} else if (missile_run === 3) {
-			console.log("Additional logic for level 1");
-		}
-	setInterval(game, 3000);
-	};
+	// var game = function (){
+		// missile_run = dispatch();
+	// 	if (missile_run === 1) {
+	// 		console.log("Additional logic for level 1");
+	// 	} else if (missile_run === 2) {
+	// 		console.log("Additional logic for level 2");
+	// 	} else if (missile_run === 3) {
+	// 		console.log("Additional logic for level 1");
+	// 	}
+	// setInterval(game, 3000);
+	// };
 
 	// var yDeg = calc_angle(start_point, end_point);
 	// var have_missile_rotate = $(x).css({ // PAIR TO (LGest trans to SMest)
