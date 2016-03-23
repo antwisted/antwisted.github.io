@@ -41,6 +41,8 @@ $(document).ready(function (){
 /************
 AUDIO CONTROLS
 ************/
+	var mario_start = new Audio("./audio/sm64_mario_lets_go.wav");
+
 	// Used .prop() Instead of .attr() To Determine Node Property Values
 	var video_mute = $("#sound").on('click', function (){
 		var mute = $(video).prop("muted");
@@ -58,17 +60,23 @@ AUDIO CONTROLS
 
 	};
 
+
 /************
 BUTTONS
 ************/
 	// Front Page: Initiate Game
 	var start_button = $("#start").on('click', function (){
-		$("#front_bg").hide();
-		$("#front_container").hide();
 		video.pause();
-		$("#game_bg").show();
-		$("#game_container").show();
-		play_smcb();
+		mario_start.play();
+
+		var game_start = function(){
+			$("#front_bg").hide();
+			$("#front_container").hide();
+			$("#game_bg").show();
+			$("#game_container").show();
+			play_smcb();
+		}
+		setTimeout(game_start, 1000);
 	});
 
 	// Front Page: How To Button
@@ -116,6 +124,19 @@ GAME BODY
 ************/
 var play_smcb = function (){
 
+	// In Game: Audio Variables
+	var yahoo = new Audio("./audio/sm64_mario_yahoo.wav"),
+		here_we_go = new Audio("./audio/sm64_mario_here_we_go.wav")
+		bg_lvl1 = new Audio("./audio/ground-theme.mp3"),
+		bg_lvl2 = new Audio("./audio/13-super-mario-rap.mp3"),
+		lvl_clear = new Audio("./audio/04-area-clear.mp3"),
+		game_clear = new Audio("./audio/04-level-clear.mp3"),
+		power_up = new Audio("./audio/03-power-up.mp3"),
+		life_up = new Audio("./audio/18-1-up.mp3")
+		star_time = new Audio("./audio/07-invincible-starman.mp3"),
+		mario_down = new Audio("./audio/15-1-down.mp3"),
+		game_over = new Audio("./audio/16-game-over.mp3");
+
 	// In Game: Default Variables
 	var score_box = $("#score_box");
 	$(score_box).html("<p id='score_box' class='gametext_med'>MARIO</br>000000</p>");
@@ -124,7 +145,6 @@ var play_smcb = function (){
 	var score_e = $("#score_");
 	var time_e = $("#time");
 	var game_area = $("#game_bg");
-	// var bg_music = new Audio("../audio/bro_music.mp3");
 	var time_lapse = 0,
 		final_score = 0,
 		deployed = 0,
@@ -138,7 +158,7 @@ var play_smcb = function (){
 		level = 1,
 		clock, time_output, score_output, missile_run, random, pick, fire_missile, val;
 
-    // Game Page: Pause Game Button
+  // Game Page: Pause Game Button
 	var pause_game = $("#pause_game").on('click', function(){
 		alert("The game has been paused. Press okay to return to the game.");
 	});	
@@ -158,6 +178,7 @@ var play_smcb = function (){
 		console.log("User quit option: " + exit);
 		return game_running = true;
 	};
+
 	// Game Page: Quit With Esc Key
     $(document).on('keyup', function(e){
 		console.log(e);
@@ -311,16 +332,17 @@ var play_smcb = function (){
 					});
 					break
 				default:
+					console.log("There was trouble processing missile_id information.")
 					lvl();		
 			}
 		} else {
 			lvl();
 		}
 
-		game_area.append(x);
     missiles_present += 1;
-    deployed += 1;		
-	}
+    deployed += 1;
+    return game_area.append(x);
+	};
 
 	// Create functioning Missile destroyed action
 	$('.active').on("click", function(e){
@@ -328,7 +350,8 @@ var play_smcb = function (){
     score_val(score_amount);
     missiles_present -= 1;
     destroyed += 1;
-    e.class('.destroyed');
+    e.fadeTo(1000, 0);
+    e.remove();
   });
 
 	var launch = function (population){
@@ -350,7 +373,7 @@ var play_smcb = function (){
 		// Clearly not working. Need to reconsider animation.
 		firepoint[0].innerHTML = "@keyframes fireball { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg) translate(" + x +  "," + y + "); } }";
 		
-		// Works, but server no purpose
+		// Works, but serves no purpose
 		game_area.append(fireball);
 		var f = function(){
 			fireball.fadeTo(1000, 0);
@@ -359,26 +382,27 @@ var play_smcb = function (){
 		setTimeout(f, 800);
   };
 
-  var create_boss = function (lvl, callback){
+  var create_boss = function (lvl){
   	var boo;
   	var wario;
   	var bowswer;
-  	callback();
+  	
+  	launch();
   };
 
-  var create_multiplier = function (lvl, callback){
-  	callback();
+  var create_multiplier = function (lvl){
+  	
+  	launch();
   };
 
 	var select_level = function (deployed){
-	
+		var current_lvl = level;
+
 		if (deployed < 50) {
 			level = 1;
 		}
 		if (deployed === 50) {
 			level = 2;
-			// bg.music switch
-			setTimeout(launch(0), 5000);
 		}
 		if ((deployed > 50) && (deployed < 150)) {
 			level = 2;
@@ -386,11 +410,18 @@ var play_smcb = function (){
 		if (deployed === 150) {
 			level = 3;
 			// bg.music switch
-			setTimeout(launch(0), 5000);
+			setTimeout(launch(), 5000);
 		}
 		if ((deployed > 150) && (deployed < 400)) {	
 			level = 3;
 		}
+		if !(current_lvl === level) {
+
+			launch();
+		}
+
+		// bg.music switch
+		setTimeout(launch(), 5000);
 
 	console.log("level: " + level)
 	return level;
@@ -430,7 +461,7 @@ var play_smcb = function (){
 	};
 
 
-  // Initialize
+  // Initialize SMCB
 	game_running = true;	
 	console.log("Game running status: " + game_running);
 	runtime(time_val);
