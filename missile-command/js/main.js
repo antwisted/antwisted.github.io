@@ -8,6 +8,16 @@ Thanks for visiting! Support GA!
 ************************************/
 
 $(document).ready(function (){
+// The remove() method removes the selected elements,
+// including all text and child nodes.
+// This method also removes data and events of the selected elements.
+// To remove the elements without removing data and events,
+// use the detach() method instead. To remove only the content from
+// the selected elements, use the empty() method.
+// Usage:
+// $("button").click(function(){
+//     $("p").remove();
+// });
 
 	"use strict";
 	console.log("Game loaded and linked.");
@@ -250,43 +260,69 @@ var play_smcb = function (){
 	};
 
 	// Create Missle
-	var create_missile = function(push){
-		var missile = {
-			blk : $("<div class='blk_missile'></div>"),
-			red : $("<div class='red_missile'></div>"),
-			fire : $("<div class='fire_missile'></div>")
+	var create_missile = function(missile_id){
+		var x,
+			missile = {
+				blk : $("<div class='blk_missile active'></div>"),
+				red : $("<div class='red_missile active'></div>"),
+				fire : $("<div class='fire_missile active'></div>")
+			},
+			lvl = function (){
+				if (level === 1) {
+					x = missile.blk.css({
+					"animation": randomizer("b"),
+					"animation-duration": "7s"
+					});
+				}
+
+				if (level === 2) {
+					x = missile.red.css({
+					"animation": randomizer("r"),
+					"animation-duration": "7s"
+					});
+				}
+
+				if (level === 3) {
+					x = missile.fire.css({
+					"animation": randomizer("f"),
+					"animation-duration": "7s"
+					});
+				}
+			};
+
+		if (missile_id) {
+			switch (missile_id) {
+				case 1:
+					x = missile.blk.css({
+						"animation": randomizer("b"),
+						"animation-duration": "7s"
+					});
+					break
+				case 2:
+					x = missile.red.css({
+						"animation": randomizer("b"),
+						"animation-duration": "7s"
+					});
+					break
+				case 3:
+					x = missile.fire.css({
+						"animation": randomizer("b"),
+						"animation-duration": "7s"
+					});
+					break
+				default:
+					lvl();		
+			}
+		} else {
+			lvl();
 		}
 
-		if (push === 1 || level === 1) {
-			fire_missile = missile.blk;
-		}
-
-		if (push === 2 || level === 2) {
-			fire_missile = missile.red;
-		}
-
-		if (push === 3 || level === 3) {
-			fire_missile = missile.fire;
-		}
-
-		// Add class launch class
-		// Missile animation
-		fire_missile.css({
-			"animation": randomizer("b"),
-			"animation-duration": "17s"
-			// "animation": "ease-in 7s 1 normal forward running"
-		});
-		// blk.css({"animation-name": "blk_one", "animation-duration": "3s"})
-    
-    // Missile append && count
-    game_area.append(fire_missile);
+		game_area.append(x);
     missiles_present += 1;
-    deployed += 1;
-	    // blk.css("top", Math.random() * window.innerHeight);
-	    // blk.css("left", Math.random() * window.innerWidth);
+    deployed += 1;		
 	}
 
-	// Missile destroyed
+	// Create functioning Missile destroyed action
 	$('.active').on("click", function(e){
     score_amount += 20;
     score_val(score_amount);
@@ -318,23 +354,23 @@ var play_smcb = function (){
 		game_area.append(fireball);
 		var f = function(){
 			fireball.fadeTo(1000, 0);
+			fireball.remove();
 		}
 		setTimeout(f, 800);
-    return false;
   };
 
-  var create_boss = function(level, callback){
+  var create_boss = function (lvl, callback){
   	var boo;
   	var wario;
   	var bowswer;
   	callback();
   };
 
-  var create_multiplier = function(level, callback){
+  var create_multiplier = function (lvl, callback){
   	callback();
   };
 
-	var select_level = function(deployed){
+	var select_level = function (deployed){
 	
 		if (deployed < 50) {
 			level = 1;
@@ -360,30 +396,29 @@ var play_smcb = function (){
 	return level;
 	};
 
-	var missile_push = function (level){
+	var missile_push = function (lvl){
 		var launch_array = [];
 
 		// Level 1 Deployment Model
-		if (level === 1) {
+		if (lvl === 1) {
 			launch_array = [1, 1, 1];
-			launch_array.forEach(function(e){
+			launch_array.forEach(function (e){
 				create_missile(e);
 			});
 		}
 		
-		
 		// Level 2 Deployment Model
-		if (level === 2) {
+		if (lvl === 2) {
 			launch_array = [2, 2, 2, 1, 1, 1];
-			launch_array.forEach(function(e){
+			launch_array.forEach(function (e){
 				create_missile(e);
 			});
 		}
 
 		// Level 3 Deployment Model
-		if (level === 3) {
+		if (lvl === 3) {
 			launch_array = [3, 3, 3, 1, 2, 2, 2, 1, 3, 2, 1, 2, 2, 3, 3];
-			launch_array.forEach(function(e){
+			launch_array.forEach(function (e){
 				create_missile(e);
 			});
 		}
@@ -419,9 +454,7 @@ var play_smcb = function (){
 		}
 		if (deployed % 15 === 0 && level === 3) {
 			missile_push(level);
-		}
-		
-	return false;
+		};
 	});
 	
 	var game = function (){
