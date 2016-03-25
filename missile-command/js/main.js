@@ -41,7 +41,18 @@ $(document).ready(function (){
 /************
 AUDIO CONTROLS
 ************/
-	var mario_start = new Audio("./audio/sm64_mario_lets_go.wav");
+	var mario_start = new Audio("./audio/sm64_mario_lets_go.wav"),
+	yahoo = new Audio("./audio/sm64_mario_yahoo.wav"),
+		here_we_go = new Audio("./audio/sm64_mario_here_we_go.wav"),
+		bg_lvl1 = new Audio("./audio/ground-theme.mp3"),
+		bg_lvl2 = new Audio("./audio/13-super-mario-rap.mp3"),
+		lvl_clear = new Audio("./audio/04-area-clear.mp3"),
+		game_clear = new Audio("./audio/04-level-clear.mp3"),
+		power_up = new Audio("./audio/03-power-up.mp3"),
+		life_up = new Audio("./audio/18-1-up.mp3"),
+		star_time = new Audio("./audio/07-invincible-starman.mp3"),
+		mario_down = new Audio("./audio/15-1-down.mp3"),
+		game_over = new Audio("./audio/16-game-over.mp3");
 
 	// Used .prop() Instead of .attr() To Determine Node Property Values
 	var video_mute = $("#sound").on('click', function (){
@@ -67,7 +78,7 @@ BUTTONS
 	// Front Page: Initiate Game
 	var start_button = $("#start").on('click', function (){
 		video.pause();
-		mario_start.play();
+		here_we_go.play();
 
 		var game_start = function(){
 			$("#front_bg").hide();
@@ -76,7 +87,7 @@ BUTTONS
 			$("#game_container").show();
 			play_smcb();
 		}
-		setTimeout(game_start, 1000);
+		setTimeout(game_start, 2000);
 	});
 
 	// Front Page: How To Button
@@ -292,21 +303,21 @@ var play_smcb = function (){
 				if (level === 1) {
 					x = missile.blk.css({
 					"animation": randomizer("b"),
-					"animation-duration": "7s"
+					"animation-duration": "9s"
 					});
 				}
 
 				if (level === 2) {
 					x = missile.red.css({
-					"animation": randomizer("r"),
-					"animation-duration": "7s"
+						"animation": randomizer("r"),
+					"animation-duration": "9s"
 					});
 				}
 
 				if (level === 3) {
 					x = missile.fire.css({
 					"animation": randomizer("f"),
-					"animation-duration": "7s"
+					"animation-duration": "9s"
 					});
 				}
 			};
@@ -339,44 +350,45 @@ var play_smcb = function (){
 			lvl();
 		}
 
-    missiles_present += 1;
+		missiles_present += 1;
     deployed += 1;
     game_area.append(x);
+
+		x.on("click", function(){
+	    score_amount += 20;
+	    score_val(score_amount);
+	    missiles_present -= 1;
+	    destroyed += 1;
+	    x.fadeTo(1000, 0);
+	    x.remove();
+  	});
+
     var expire = function (){
     	x.remove();
     }
-    return setTimeout(expire, 7000);
+    return setTimeout(expire, 9000);
 	};
 
 	// Create functioning Missile destroyed action
-	$('.active').on("click", function(e){
-    score_amount += 20;
-    score_val(score_amount);
-    missiles_present -= 1;
-    destroyed += 1;
-    e.fadeTo(1000, 0);
-    e.remove();
-  });
+	
 
 	// Almost missile logic...
 	var launch = function (){
-		var fire_away = function (){
-			create_missile();
-		}
 
 		if (missiles_present < 7){
-			setInterval(fire_away, 700);
+			setInterval(create_missile, 700);
 		}
 
-		if (missile_present > 7){
-			clearInterval(fire_away);
+		if (missiles_present > 7){
+			clearInterval(create_missile);
 			return false;
 		}
 
 		var hold_it = function (){
 			return launch();
 		}
-	setTimeout(hold_it, 10000);
+		setTimeout(hold_it, 10000);
+
 	};
 
 	// setInterval(launch)
@@ -490,7 +502,7 @@ var play_smcb = function (){
 	});
 
 	// bg_music.play();
-	launch(0);
+	launch();
 	$(document).on('mousemove', function(e){
 		console.log(e);
 		if (missiles_present < 7 && game_running) {
