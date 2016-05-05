@@ -1,0 +1,59 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+@font-face {
+  font-family: 'Pretendo';
+  src: url('Pretendo.eot');
+  src:
+  	url('Pretendo.eot?#iefix') format('embedded-opentype'),
+  	url('Pretendo.woff') format('woff'),
+  	url('Pretendo.ttf')  format('truetype'),
+  	url('Pretendo.svg#Pretendo') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#lead {
+	font-family: 'Pretendo';
+	font-size: 60px;
+	/* convert to ems */
+}
+
+#r {
+	display: inline-block;
+	position: relative;
+	bottom: 37px;
+}
+
+#blk_begin {
+	position: fixed;
+	margin: 0;
+	padding: 0;
+	min-width: 100%;
+	min-height: 100%;
+	background: #000000;
+	z-index: 20000;
+}
+
+#antwisted {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #ff0000;
+	z-index: 20386;
+	animation: slidedown 4s linear;
+	-webkit-animation: slidedown 4s linear;
+	-moz-animation: slidedown 4s linear;
+}
+
+@keyframes slidedown {
+	from {
+		top: -5%;
+	}
+	to {
+		top: 50%;
+	}
+}
