@@ -39,11 +39,10 @@ body {
 
 #antwisted {
 	position: absolute;
-	top: 50%;
+	top: 45%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: #ff0000;
-	z-index: 20386;
 	animation: slidedown 4s linear;
 	-webkit-animation: slidedown 4s linear;
 	-moz-animation: slidedown 4s linear;
@@ -54,6 +53,6 @@ body {
 		top: -5%;
 	}
 	to {
-		top: 50%;
+		top: 45%;
 	}
 }

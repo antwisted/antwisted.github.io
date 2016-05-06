@@ -8,31 +8,39 @@ Thanks for visiting! Support GA!
 ************************************/
 
 $(document).ready(function (){
-// The remove() method removes the selected elements,
-// including all text and child nodes.
-// This method also removes data and events of the selected elements.
-// To remove the elements without removing data and events,
-// use the detach() method instead. To remove only the content from
-// the selected elements, use the empty() method.
-// Usage:
-// $("button").click(function(){
-//     $("p").remove();
-// });
 
-	"use strict";
-	console.log("Game loaded and linked.");
+"use strict";
+console.log("Game loaded and linked.");
 
+var video = document.querySelector("video");
+video.pause();
 
-	var video = document.querySelector("video");
+var nintendo = new Audio("audio/gameboy_start.mp3");
+setTimeout(function (){
+	nintendo.play();
+	setTimeout(function (){
+		$("#blk_begin").fadeOut(2000);
+		setTimeout(function (){
+			gameStart();
+			setTimeout(function (){
+				$("#blk_begin").remove();
+			}, 2000);
+		}, 1500);
+	}, 2500);
+}, 3800);
+
+var gameStart = function () {
+
 	var game_running = false;
 
 	// var firepoint = $("<style>").text("");
 	// $("head").append(firepoint);
 	
+	$("#front_container").fadeIn(2500);
+	$("#fc_one").fadeIn(2500);
+	$("#front_bg").fadeIn(2500);
 	video.play();
-	$("#front_bg").show();
-	$("#front_container").show();
-	$("#fc_one").show();
+
 	// video.pause();
 	// $("#game_bg").show();
 	// $("#game_container").show();
@@ -41,18 +49,19 @@ $(document).ready(function (){
 /************
 AUDIO CONTROLS
 ************/
+	// Audio Variables
 	var mario_start = new Audio("./audio/sm64_mario_lets_go.wav"),
-	yahoo = new Audio("./audio/sm64_mario_yahoo.wav"),
-		here_we_go = new Audio("./audio/sm64_mario_here_we_go.wav"),
-		bg_lvl1 = new Audio("./audio/ground-theme.mp3"),
-		bg_lvl2 = new Audio("./audio/13-super-mario-rap.mp3"),
-		lvl_clear = new Audio("./audio/04-area-clear.mp3"),
-		game_clear = new Audio("./audio/04-level-clear.mp3"),
-		power_up = new Audio("./audio/03-power-up.mp3"),
-		life_up = new Audio("./audio/18-1-up.mp3"),
-		star_time = new Audio("./audio/07-invincible-starman.mp3"),
-		mario_down = new Audio("./audio/15-1-down.mp3"),
-		game_over = new Audio("./audio/16-game-over.mp3");
+			yahoo = new Audio("./audio/sm64_mario_yahoo.wav"),
+			here_we_go = new Audio("./audio/sm64_mario_here_we_go.wav"),
+			bg_lvl1 = new Audio("./audio/ground-theme.mp3"),
+			bg_lvl2 = new Audio("./audio/13-super-mario-rap.mp3"),
+			lvl_clear = new Audio("./audio/04-area-clear.mp3"),
+			game_clear = new Audio("./audio/04-level-clear.mp3"),
+			power_up = new Audio("./audio/03-power-up.mp3"),
+			life_up = new Audio("./audio/18-1-up.mp3"),
+			star_time = new Audio("./audio/07-invincible-starman.mp3"),
+			mario_down = new Audio("./audio/15-1-down.mp3"),
+			game_over = new Audio("./audio/16-game-over.mp3");
 
 	// Used .prop() Instead of .attr() To Determine Node Property Values
 	var video_mute = $("#sound").on('click', function (){
@@ -81,11 +90,15 @@ BUTTONS
 		here_we_go.play();
 
 		var game_start = function(){
-			$("#front_bg").hide();
-			$("#front_container").hide();
-			$("#game_bg").show();
-			$("#game_container").show();
-			play_smcb();
+			$("#front_bg").fadeOut(3000);
+			$("#front_container").fadeOut(2000);
+			setTimeout(function (){
+				$("#game_bg").fadeIn(2000);
+				$("#game_container").fadeIn(2000);
+				setTimeout(function (){
+					play_smcb();
+				}, 2000);
+			}, 2000);
 		}
 		setTimeout(game_start, 2000);
 	});
@@ -111,13 +124,12 @@ BUTTONS
 
 	// Back Page: Return Start Page
 	var gohome_button = $("#go_home").on('click', function (){
+		$("#back_bg").fadeOut(1200);
+		$("#back_container").fadeOut(1200);
+		$("#front_bg").fadeIn(2000);
+		$("#front_container").fadeIn(2000);
+		$("#fc_one").fadeIn(2000);
 		video.load();
-		$("#back_bg").hide();
-		$("#back_container").hide();
-		video.play();
-		$("#front_bg").show();
-		$("#front_container").show();
-		$("#fc_one").show();
 	});
 
 	// Back Page: Play Again Button
@@ -135,19 +147,10 @@ GAME BODY
 ************/
 var play_smcb = function (){
 
-	// In Game: Audio Variables
-	var yahoo = new Audio("./audio/sm64_mario_yahoo.wav"),
-		here_we_go = new Audio("./audio/sm64_mario_here_we_go.wav"),
-		bg_lvl1 = new Audio("./audio/ground-theme.mp3"),
-		bg_lvl2 = new Audio("./audio/13-super-mario-rap.mp3"),
-		lvl_clear = new Audio("./audio/04-area-clear.mp3"),
-		game_clear = new Audio("./audio/04-level-clear.mp3"),
-		power_up = new Audio("./audio/03-power-up.mp3"),
-		life_up = new Audio("./audio/18-1-up.mp3"),
-		star_time = new Audio("./audio/07-invincible-starman.mp3"),
-		mario_down = new Audio("./audio/15-1-down.mp3"),
-		game_over = new Audio("./audio/16-game-over.mp3");
-
+	setTimeout(function (){
+		bg_lvl1.play();
+		/* REMEMBER LEVEL SELECT FUNCTION && REMOVE FROM QUIT GAME */
+	}, 800);
 	// In Game: Default Variables
 	var score_box = $("#score_box");
 	$(score_box).html("<p id='score_box' class='gametext_med'>MARIO</br>000000</p>");
@@ -157,17 +160,17 @@ var play_smcb = function (){
 	var time_e = $("#time");
 	var game_area = $("#game_bg");
 	var time_lapse = 0,
-		final_score = 0,
-		deployed = 0,
-		destroyed = 0,
-		sec = 0,
-		min = 0,
-		hrs = 0,
-		missiles_present = 0,
-		score_amount = 0,
-		clockbreaker = false,
-		level = 1,
-		clock, time_output, score_output, missile_run, random, pick, fire_missile, val;
+			final_score = 0,
+			deployed = 0,
+			destroyed = 0,
+			sec = 0,
+			min = 0,
+			hrs = 0,
+			missiles_present = 0,
+			score_amount = 0,
+			clockbreaker = false,
+			level = 1,
+			clock, time_output, score_output, missile_run, random, pick, fire_missile, val;
 
   // Game Page: Pause Game Button
 	var pause_game = $("#pause_game").on('click', function(){
@@ -178,6 +181,7 @@ var play_smcb = function (){
 	var quit_game = function(){
 		var exit = confirm("Are you sure you want to quit?");
 		if (exit) {
+			bg_lvl1.pause();
 			// bg.music switch
 			clearInterval(clock);
 			$("#game_bg").hide();
@@ -551,4 +555,5 @@ var play_smcb = function (){
 	// return game_running = false;
 
 	}
+}
 });

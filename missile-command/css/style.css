@@ -7,8 +7,6 @@ Slack: @antwisted
 Thanks for visiting! Support GA!
 ************************************/
 
-@import url('');
-
 
 /************
 CSS RESETS
@@ -78,6 +76,18 @@ footer, header, hgroup, menu, nav, section, video {
 PAGE ELEMENTS
 ************/
 @font-face {
+  font-family: 'Pretendo';
+  src: url('Pretendo.eot');
+  src:
+  	url('Pretendo.eot?#iefix') format('embedded-opentype'),
+  	url('Pretendo.woff') format('woff'),
+  	url('Pretendo.ttf')  format('truetype'),
+  	url('Pretendo.svg#Pretendo') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
     font-family: 'super_plumber_brothersregular';
     src: url('super_mario_title-webfont.eot');
     src: url('super_mario_title-webfont.eot?#iefix') format('embedded-opentype'),
@@ -101,6 +111,39 @@ PAGE ELEMENTS
     font-style: normal;
 }
 
+#lead {
+	font-family: 'Pretendo';
+	font-size: 60px;
+	/* convert to ems */
+}
+
+#r {
+	display: inline-block;
+	position: relative;
+	bottom: 37px;
+}
+
+#blk_begin {
+	position: fixed;
+	margin: 0;
+	padding: 0;
+	min-width: 100%;
+	min-height: 100%;
+	background: #000000;
+	z-index: 20000;
+}
+
+#antwisted {
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #ff0000;
+	animation: slidedown 4s linear;
+	-webkit-animation: slidedown 4s linear;
+	-moz-animation: slidedown 4s linear;
+}
+
 #front_bg h1, h2, h3, h4, h5, h6 {
      font-family: 'super_plumber_brothersregular', 'Impact', serif;
      color: #fff;
@@ -122,6 +165,7 @@ PAGE ELEMENTS
 	text-align: left;
 	width: 48%;
 	padding: 1% 0 0 1%;
+	cursor: pointer;
 }
 
 #sound {
@@ -132,6 +176,27 @@ PAGE ELEMENTS
 	text-align: right;
 	width: 48%;
 	padding: 1% 1% 0 0;
+	cursor: pointer;
+}
+
+#start {
+	cursor: pointer;
+}
+
+#how_to {
+	cursor: pointer;
+}
+
+#play_again {
+	cursor: pointer;
+}
+
+#go_home {
+	cursor: pointer;
+}
+
+.go_back {
+	cursor: pointer;
 }
 
 .box_header {
@@ -157,6 +222,7 @@ body {
 	font-size: 10.5pt;
 	line-height: 1.4;
 	color: #fff;
+	background: #000;
 }
 
 h1 {
@@ -314,13 +380,24 @@ video#on_play {
 /************
 GAME ELEMENTS
 ************/
+#mute_sound {
+	position: absolute;
+	background-color: yellow;
+	left: 5%;
+	top: 1%;
+	height: 30px;
+	width: 30px;
+	cursor: pointer;
+}
+
 #quit_game {
 	position: absolute;
 	background-color: red;
 	left: 95%;
-	top: 0;
+	top: 1%;
 	height: 30px;
 	width: 30px;
+	cursor: pointer;
 }
 
 #time_box {
@@ -335,10 +412,12 @@ GAME ELEMENTS
 
 #mario_sprite {
 	position: absolute;
-	background-color: #ff0000;
 	left: 45%;
 	height: 100px;
 	width: 100px;
+	background-color: #ff0000;
+	background: url(../img/mario_right.png) no-repeat;
+	background-size: contain;
 }
 
 #luigi_sprite {
@@ -366,11 +445,12 @@ GAME ELEMENTS
 
 .blk_missile {
 	position: absolute;
-/*	background: url();*/
-	background: #000;
 	top: 0%;
 	height: 60px;
-	width: 25px;
+	width: 30px;
+	background: #000;
+	background: url(../img/bullet_right.png) no-repeat;
+	background-size: contain;
 }
 
 .blk_missle:active {
@@ -517,6 +597,15 @@ RESPONSIVE MEDIA
 
 	#time_box {
 		left: 68%;
+	}
+}
+
+@keyframes slidedown {
+	from {
+		top: -5%;
+	}
+	to {
+		top: 45%;
 	}
 }
 
