@@ -12,10 +12,13 @@ $(document).ready(function (){
 "use strict";
 console.log("Game loaded and linked.");
 
+var game_running;
 var video = document.querySelector("video");
 video.pause();
 
+// Original Gameboy-based Preloader //
 var nintendo = new Audio("audio/gameboy_start.mp3");
+$("#antwisted").show();
 setTimeout(function (){
 	nintendo.play();
 	setTimeout(function (){
@@ -29,27 +32,62 @@ setTimeout(function (){
 	}, 2500);
 }, 3800);
 
+
 var gameStart = function () {
 
-	var game_running = false;
+// Splash Screen Functions //
+	$("#front_container").fadeIn(2500);
+	$("#fc_one").fadeIn(2500);
+	$("#front_bg").fadeIn(2500);
+	
+	var bowser_boast = function () {
+		setTimeout(function (){
+			// $(".bowser").show(); // dual animations?
+			$("#first").show();
+			setTimeout(function (){
+				$("#first").hide();
+				$("#second").show();
+				setTimeout(function (){
+					$("#second").hide();
+					$("#third").show();
+					setTimeout(function (){
+						$("#third").fadeOut(2000);
+						// $(".bowser").fadeOut(2000);
+						setTimeout(function(){
+							// $(".bowser").show();
+							$("#fourth").show();
+							setTimeout(function(){
+								$("#fourth").hide();
+								$("#fifth").show();
+								setTimeout(function (){
+									$("#fifth").fadeOut(2000);
+									// $(".bowser").fadeOut(2000);
+								}, 2500);
+					 		}, 2500);
+						}, 3100);
+					}, 3000);
+				}, 2750);
+			}, 2400);
+		}, 63800);
+	};
+
+	video.play();
+	bowser_boast();
 
 	// var firepoint = $("<style>").text("");
 	// $("head").append(firepoint);
 	
-	$("#front_container").fadeIn(2500);
-	$("#fc_one").fadeIn(2500);
-	$("#front_bg").fadeIn(2500);
-	video.play();
-
-	// video.pause();
-	// $("#game_bg").show();
-	// $("#game_container").show();
+	// first 1:04 64000 - 2s
+	// second 1:06 66000 - 5s
+	// third 1:15 75000 - 2s
+	// fourth 1:17.5 77500 - 6s (different fade)
 
 
 /************
 AUDIO CONTROLS
 ************/
-	// Audio Variables
+
+// Audio Variables //
 	var mario_start = new Audio("./audio/sm64_mario_lets_go.wav"),
 			yahoo = new Audio("./audio/sm64_mario_yahoo.wav"),
 			here_we_go = new Audio("./audio/sm64_mario_here_we_go.wav"),
@@ -63,7 +101,7 @@ AUDIO CONTROLS
 			mario_down = new Audio("./audio/15-1-down.mp3"),
 			game_over = new Audio("./audio/16-game-over.mp3");
 
-	// Used .prop() Instead of .attr() To Determine Node Property Values
+// HTML5 Video Options //	
 	var video_mute = $("#sound").on('click', function (){
 		var mute = $(video).prop("muted");
 		if (mute) {
@@ -75,7 +113,9 @@ AUDIO CONTROLS
 			$("#sound").text("Sound: OFF");
 		}
 	});
+	// Used .prop() Instead of .attr() To Determine Node Property Values
 
+// In Game Music Options //
 	var game_mute = function (){
 
 	};
@@ -84,7 +124,7 @@ AUDIO CONTROLS
 /************
 BUTTONS
 ************/
-	// Front Page: Initiate Game
+// Front Page: Initiate Game //
 	var start_button = $("#start").on('click', function (){
 		video.pause();
 		here_we_go.play();
@@ -103,26 +143,26 @@ BUTTONS
 		setTimeout(game_start, 2000);
 	});
 
-	// Front Page: How To Button
+// Front Page: How To Play //
 	var howto_button = $("#how_to").on('click', function (){
 		$("#fc_one").hide();
 		$("#fc_two").show();
 	});
 
-	// Front Page: Copyright Statement
+// Front Page: Copyright Statement //
 	var copyright = $("#copyright").on('click', function (){
 		$("#fc_one").hide();
 		$("#fc_three").show();
 	});
 
-	// Front Page: Go Back Button
+// Front Page: Go Back To Main Container //
 	var goback_button = $(".go_back").on('click', function (){
 		$("#fc_two").hide();
 		$("#fc_three").hide();
 		$("#fc_one").show();
 	});
 
-	// Back Page: Return Start Page
+// Back Page: Return To Splash //
 	var gohome_button = $("#go_home").on('click', function (){
 		$("#back_bg").fadeOut(1200);
 		$("#back_container").fadeOut(1200);
@@ -130,9 +170,10 @@ BUTTONS
 		$("#front_container").fadeIn(2000);
 		$("#fc_one").fadeIn(2000);
 		video.load();
+		bowser_boast();
 	});
 
-	// Back Page: Play Again Button
+// Back Page: Play Again //
 	var playagain_button = $("#play_again").on('click', function (){
 		$("#back_bg").hide();
 		$("#back_container").hide();
@@ -363,8 +404,11 @@ var play_smcb = function (){
 	    score_val(score_amount);
 	    missiles_present -= 1;
 	    destroyed += 1;
-	    x.fadeTo(1000, 0);
-	    x.remove();
+	    x.fadeOut(2000);
+	    setTimeout(function (){
+	    	x.remove();	
+	    }, 3000);
+	    
   	});
 
     var expire = function (){
@@ -399,23 +443,35 @@ var play_smcb = function (){
 
 	var create_fireball = function(x, y){
 		var fireball = $("<div class='fireball'></div>");
-		fireball.css({
-			"animation-name": "fireball",
-			"animation-duration": "5s"
-		});
-		console.log(x)
-		console.log(y)
-
-		// Clearly not working. Need to reconsider animation.
-		firepoint[0].innerHTML = "@keyframes fireball { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg) translate(" + x +  "," + y + "); } }";
-		
-		// Works, but serves no purpose
 		game_area.append(fireball);
+		fireball.animate({
+			left: x+"px",
+			top: y+"px",
+		}, 200);
 		var f = function(){
-			fireball.fadeTo(1000, 0);
+			fireball.animate({
+				opacity: 0
+			}, 500);
 			fireball.remove();
 		}
-		setTimeout(f, 800);
+		setTimeout(f, 300);
+
+		var boom = $("<div class='explode'></div>");
+		boom.css({
+			"position": "absolute",
+			"left": x+"px",
+			"top": y+"px",
+			"transform": "translate(-50%, -50%)"
+		})
+		setTimeout(function (){
+			game_area.append(boom)
+			setTimeout(function (){
+	    	boom.fadeOut(2200)
+	  		setTimeout(function (){
+	    		boom.remove();
+	    	}, 3000);
+	    }, 1000);
+	  }, 300);
   };
 
   var create_boss = function (lvl){
@@ -508,7 +564,7 @@ var play_smcb = function (){
 	// bg_music.play();
 	launch();
 	$(document).on('mousemove', function(e){
-		console.log(e);
+		// console.log(e);
 		if (missiles_present < 7 && game_running) {
 			setTimeout(create_missile(), 300);
 		}
