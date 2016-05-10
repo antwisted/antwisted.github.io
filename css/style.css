@@ -7,8 +7,6 @@ Slack: @antwisted
 Thanks for visiting! Support GA!
 ************************************/
 
-@import url('');
-
 
 /************
 CSS RESETS
@@ -78,6 +76,18 @@ footer, header, hgroup, menu, nav, section, video {
 PAGE ELEMENTS
 ************/
 @font-face {
+  font-family: 'Pretendo';
+  src: url('Pretendo.eot');
+  src:
+  	url('Pretendo.eot?#iefix') format('embedded-opentype'),
+  	url('Pretendo.woff') format('woff'),
+  	url('Pretendo.ttf')  format('truetype'),
+  	url('Pretendo.svg#Pretendo') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
     font-family: 'super_plumber_brothersregular';
     src: url('super_mario_title-webfont.eot');
     src: url('super_mario_title-webfont.eot?#iefix') format('embedded-opentype'),
@@ -101,17 +111,73 @@ PAGE ELEMENTS
     font-style: normal;
 }
 
+#lead {
+	font-family: 'Pretendo', 'Verdana', sans-serif;
+	font-size: 3.5rem; /* 60px */
+}
+
+#r {
+	display: inline-block;
+	position: relative;
+	bottom: 2.2rem; /* 37px */
+}
+
+#blk_begin {
+	position: fixed;
+	margin: 0;
+	padding: 0;
+	min-width: 100%;
+	min-height: 100%;
+	background: #000000;
+	z-index: 20000;
+}
+
+#blk_end {
+	position: fixed;
+	margin: 0;
+	padding: 0;
+	min-width: 100%;
+	min-height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 20000;
+	animation: endFade 2s linear;
+}
+
+#antwisted {
+	display: none;
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #ff0000;
+	animation: slidedown 4s linear;
+	-webkit-animation: slidedown 4s linear;
+	-moz-animation: slidedown 4s linear;
+}
+
 #front_bg h1, h2, h3, h4, h5, h6 {
      font-family: 'super_plumber_brothersregular', 'Impact', serif;
      color: #fff;
 }
 
-#game_bg {
-	font-family: 'emulogicregular';
+#game_bg, #back_bg {
+	font-family: 'emulogicregular', 'Bookman Old Style', serif;
 }
 
-#back_bg {
-	font-family: 'emulogicregular';
+#super {
+	margin-bottom: -.7rem;
+	padding-top: 2rem;
+}
+
+#missile_command {
+	color: #ff0000 !important;
+	text-transform: uppercase;
+	font-size: 5rem;
+	padding: 0 15px;
+}
+
+#bros {
+	margin-top: -1.6rem;
 }
 
 #copyright {
@@ -122,6 +188,7 @@ PAGE ELEMENTS
 	text-align: left;
 	width: 48%;
 	padding: 1% 0 0 1%;
+	cursor: pointer;
 }
 
 #sound {
@@ -132,6 +199,15 @@ PAGE ELEMENTS
 	text-align: right;
 	width: 48%;
 	padding: 1% 1% 0 0;
+	cursor: pointer;
+}
+
+#start, #how_to, #play_again, #go_home, .go_back {
+	cursor: pointer;
+}
+
+#level, #time, #score {
+	font-size: 1.4em;
 }
 
 .box_header {
@@ -139,24 +215,48 @@ PAGE ELEMENTS
 }
 
 .gametext_big {
-	font-family: 'emulogicregular', 'Arial', serif;
+	font-family: 'emulogicregular', 'Palatino', serif;
 	font-size: 1.8rem;
 }
 
 .gametext_med {
-	font-family: 'emulogicregular', 'Arial', serif;
+	font-family: 'emulogicregular', 'Palatino', serif;
 	font-size: 1.4rem;
 }
 
 .gametext_sm {
-	font-family: 'emulogicregular', 'Arial', serif;
+	font-family: 'emulogicregular', 'Palatino', serif;
 	font-size: 1rem;
+}
+
+#first, #second, #third, #fourth, #fifth {
+	font-family: 'Verdana', sans-serif;
+	font-size: 1.4rem;
+	padding: .7rem;
+/*	animation: bowser 2s linear;
+	-webkit-animation: bowser 2s linear;
+	-moz-animation: bowser 2s linear;*/
+}
+
+.bowser {
+	display: none;
+	position: fixed;
+	bottom: 3%;
+	left: 50%;
+	transform: translateX(-50%);
+	background: rgba(0, 0, 0, 0.8);
+	box-shadow: 1px 1px 2px 3px #000;
+}
+
+.hscore {
+	animation: flash 1s linear infinite;
 }
 
 body {
 	font-size: 10.5pt;
 	line-height: 1.4;
 	color: #fff;
+	background: #000;
 }
 
 h1 {
@@ -192,7 +292,7 @@ button {
 	border: 1px solid #fff;
 	margin: 20px;
 	padding: 12px 18px;
-	/*border-radius: 10px;*/
+	border-radius: 10px;
 	box-shadow: 2px 2px #fff;
 }
 /***
@@ -314,13 +414,24 @@ video#on_play {
 /************
 GAME ELEMENTS
 ************/
+#mute_sound {
+	position: absolute;
+	background-color: yellow;
+	left: 5%;
+	top: 1%;
+	height: 30px;
+	width: 30px;
+	cursor: pointer;
+}
+
 #quit_game {
 	position: absolute;
 	background-color: red;
 	left: 95%;
-	top: 0;
+	top: 1%;
 	height: 30px;
 	width: 30px;
+	cursor: pointer;
 }
 
 #time_box {
@@ -335,66 +446,95 @@ GAME ELEMENTS
 
 #mario_sprite {
 	position: absolute;
-	background-color: #ff0000;
 	left: 45%;
 	height: 100px;
 	width: 100px;
+	background-color: #ff0000;
+	background: url(../img/mario_right.png) no-repeat;
+	background-size: contain;
 }
 
 #luigi_sprite {
 	display: none;
 	position: absolute;
-	background-color: #00ff00;
 	left: 53%;
 	height: 100px;
 	width: 100px;
+	background-color: #00ff00;
+	background: url(../img/luigi_left.png) no-repeat;
+	background-size: contain;
+}
+
+#game_over {
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	width: 599px;
+	height: 102px;
+	transform: translate(-50%, -50%);
+	color: #ff0000;
+	background: url(../img/game_over.png);
+	animation: over_bounce 3s linear;
+	-webkit-animation: over_bounce 3s linear;
+	-moz-animation: over_bounce 3s linear;
+	z-index: 20001;
 }
 
 .fireball {
 	position: absolute;
-	background-color: orange;
 	left: 50%;
 	top: 84%;
-	height: 20px;
-	width: 20px;
+	height: 34px;
+	width: 34px;
+	background-color: orange;
+	background: url(../img/fireball.png) no-repeat;
+	background-size: contain;
 	z-index: 5;
+	animation: spin 1s linear infinite;
 }
 
 .explode {
-
+	position: fixed;
+	height: 80px;
+	width: 80px;
+	transform: translate(-40px, -40px);
+	background: url(../img/explosion_x1.png) no-repeat;
+	background-size: contain;
+	animation: spin 2s linear;
+	animation-iteration-count: 3;
 }
 
 .blk_missile {
 	position: absolute;
-/*	background: url();*/
-	background: #000;
 	top: 0%;
-	height: 60px;
-	width: 25px;
-}
-
-.blk_missle:active {
-	background: #ff0000;
-	height: 100px;
-	width: 100px;
+	height: 70px;
+	width: 30px;
+	border: 5rem #000;
+	background: #000;
+	background: url(../img/bullet_right.png) no-repeat;
+	background-size: contain;
 }
 
 .red_missile {
-/*	position: absolute;
-	background: url();
-	background: #000;
+	position: absolute;
 	top: 0%;
 	height: 70px;
-	width: 50px;*/
+	width: 30px;
+	border: 5rem transparent;
+	background: #ff0000;
+	background: url(../img/red_right.png) no-repeat;
+	background-size: contain;
 }
 
 .fire_missile {
-/*	position: absolute;
-	background: url();
-	background: #000;
+	position: absolute;
 	top: 0%;
 	height: 70px;
-	width: 50px;*/
+	width: 30px;
+	border: 5rem transparent;
+	background: #ff0000;
+	background: url(../img/fire_bullet.png) no-repeat;
+	background-size: contain;
 }
 
 .mushroom {
@@ -404,7 +544,7 @@ GAME ELEMENTS
 	top: 0%;
 	left: 50;
 	height: 100px;
-	width: 100px;*/
+	width: 100px; */
 }
 
 .fireflower {
@@ -517,6 +657,79 @@ RESPONSIVE MEDIA
 
 	#time_box {
 		left: 68%;
+	}
+}
+
+
+/************
+ANIMATIONS
+************/
+@keyframes slidedown {
+	from {
+		top: -5%;
+	}
+	to {
+		top: 45%;
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	25% { 
+		transform: rotate(90deg);
+	}
+	50% {
+		transform: rotate(180deg);
+	}
+	75% {
+		transform: rotate(270deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes flash {
+	0% {
+		color: yellow;
+	}
+	50% {
+		color: red;
+	}
+	100% {
+		color: yellow;
+	}
+}
+
+@keyframes over_bounce {
+	0% {
+		top: -5%;
+	}
+	90% {
+		top: 50%;
+	}
+	93% {
+		top: 43%;
+	}
+	95% {
+		top: 45%;
+	}
+	97% {
+		top: 47%;
+	}
+	100% {
+		top: 45%;
+	}
+}
+
+@keyframes endFade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: .7;
 	}
 }
 
