@@ -12,7 +12,8 @@ var game_running,
 			level: 1,
 			time: 0,
 			score: 0,
-			hscore: 0
+			hscore: 0,
+			thanks: false
 		};
 $(document).ready(function (){
 
@@ -267,7 +268,10 @@ var play_smcb = function (){
 						setTimeout(function (){
 							endscreen.remove();
 							over_logo.remove();
-							// thank_you.play()
+							if (record.thanks === false) {
+								thank_you.play();
+								record.thanks = true;
+							}
 						}, 3500);
 						return (function(){
 							game_running = false;
