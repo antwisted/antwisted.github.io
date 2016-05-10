@@ -1,0 +1,7 @@
+After first game, Scoring and Clock errors on game replay:
+- Points resetting, or subtracted during play
+- Clock freezes at some point in the game (even on initial play)
+- Multiple instances of quit message
+
+- Missiles still being generated after game ends.
+- animation-duration (error?) in one of the missile constructs

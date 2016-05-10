@@ -7,22 +7,27 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Antwisted Presents - Super Missile Command Bros.</title>
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+	<link rel="shortcut icon" type="image/x-icon" href="./img/favicon.png">
 	<meta name="description" content="Missile Command, one of the most notable games from the Golden Age of Video Arcade Games, has been powered up by Nintendo's Super Mario Bros.! Help Mario save the Mushroom Kingdom!" />
-	<link rel="canonical" href="http://antwisted.github.com/missilecom/" />
+	<link rel="canonical" href="http://antwisted.github.com" />
 	<meta property="og:locale" content="en_US" />
 	<meta property="og:type" content="website" />
-	<meta property="og:title" content="Super Missile Command Bros." />
+	<meta property="og:title" content="Super Missle Command Bros." />
 	<meta property="og:description" content="Missile Command, one of the most notable games from the Golden Age of Video Arcade Games, has been powered up by Nintendo's Super Mario Bros.! Help Mario save the Mushroom Kingdom!" />
-	<meta property="og:url" content="http://antwisted.github.com/missilecom/" />
+	<meta property="og:url" content="http://antwisted.github.com" />
 	<meta property="og:site_name" content="Super Missile Command Bros." />
 	<meta property="og:image" content="img/bulletship_attack.jpg" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:description" content="Missile Command, one of the most notable games from the Golden Age of Video Arcade Games, has been powered up by Nintendo's Super Mario Bros.! Help Mario save the Mushroom Kingdom!" />
-	<meta name="twitter:title" content="Super Missile Command Bros." />
+	<meta name="twitter:title" content="Super Missle Command Bros." />
 </head>
 
 <body>
+<div id="blk_begin">
+<div id="antwisted">
+		<span id="lead">Antwisted</span><span id="r">®</span>
+</div>
+</div>
 
 <section id="front_bg">
 
@@ -30,23 +35,15 @@
     <source src="video/smcb_intro.webm" type="video/webm">
     <source src="video/smcb_intro.mp4" type="video/mp4">
 </video>
-<div id="bowser_boast">
-	<!--
-	Look closely...
-	And watch me burn the Mushroom Kingdom, straight to the ground...
-	HaHaHa HaHa Ha…
-	NOW!!!!!
-	-->
-</div>
  	
  	<article id="front_container">
  		<div id="fc_one">
 	 		<p id="copyright">Copyright Statement</p>
 	 		<p id="sound">Sound: ON</p>
 	 		<header class="box_header">
-				<h2 style="margin-bottom: -.7rem;">super</h2>
-				<h1 style="color: #ff0000; text-transform: uppercase; font-size: 5rem; padding: 0 15px;">Missile Command</h1>
-				<h2 style="margin-top: -1.6rem;">bros.</h2>
+				<h2 id="super">super</h2>
+				<h1 id="missile_command">Missile Command</h1>
+				<h2 id="bros" style="">bros.</h2>
 			</header>
 			<button id="start">Start Game</button>
 			<button id="how_to">How To Play</button>
@@ -54,7 +51,8 @@
 		<div id="fc_two">
 			<h2 class="gametext_med">How To Play:</h2>
 			<br />
-			<p class="gametext_sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			<p class="gametext_sm">Try to keep the missiles from hitting the ground using Mario and his fireballs. Once three missiles hit the ground, it's game over!</p><br />
+			<p class="gametext_sm">The game increases in difficulty and level over time. Can you destroy all the missiles before Bowser destroys the Mushroom Kingdom?</p>
 			<button class="go_back">Go Back</button>
 		</div>
 		<div id="fc_three">
@@ -64,12 +62,17 @@
 			<button class="go_back">Go Back</button>
 		</div>
 	</article>
-
+	<div class="bowser" id="first">Look closely...</p></div>
+	<div class="bowser" id="second">And watch me burn the Mushroom Kingdom</p></div>
+	<div class="bowser" id="third">straight to the ground.</p></div>
+	<div class="bowser" id="fourth">MuaHaHaHa HaHa Ha...</p></div>
+	<div class="bowser" id="fifth">NOW!!!</p></div>
 </section>
 
 
 <section id="game_bg">
 	
+	<div id="mute_sound"></div>
 	<div id="quit_game"></div>
 	<div id="score_box"></div>
 	<div id="time_box"></div>
@@ -94,9 +97,9 @@
 
 	<article id="back_container">
 
-		<p class="gametext_med">You completed up to:<br/>[level]<br /><br/>
-		Time elapsed:<br/>[counter]</p><br />
-		<p class="gametext_sm">Your Score: [score]</p>
+		<p class="gametext_med">You completed up to:<p id="level">[level]</p><br/>
+		<p class="gametext_med">Time elapsed:<p id="time">[time]</p><br />
+		<p class="gametext_med">Your Score:</p><p id="score">[score]</p>
 		<p class="gametext_sm hscore">New High Score!</p><br />
 
 		<button id="play_again">Play Again!</button>
@@ -106,6 +109,15 @@
 
 </section>
 
+<script type="text/javascript">
+var _mfq = _mfq || [];
+  (function() {
+    var mf = document.createElement("script");
+    mf.type = "text/javascript"; mf.async = true;
+    mf.src = "//cdn.mouseflow.com/projects/841740bc-a775-488d-8ebd-624dfc21356f.js";
+    document.getElementsByTagName("head")[0].appendChild(mf);
+  })();
+</script>
 </body>
 <!--[if lt IE 9]>
 <script>
