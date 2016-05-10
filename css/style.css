@@ -132,6 +132,17 @@ PAGE ELEMENTS
 	z-index: 20000;
 }
 
+#blk_end {
+	position: fixed;
+	margin: 0;
+	padding: 0;
+	min-width: 100%;
+	min-height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 20000;
+	animation: endFade 2s linear;
+}
+
 #antwisted {
 	display: none;
 	position: absolute;
@@ -226,34 +237,16 @@ PAGE ELEMENTS
 .bowser {
 	display: none;
 	position: fixed;
-	bottom: 5%;
+	bottom: 3%;
 	left: 50%;
 	transform: translateX(-50%);
 	background: rgba(0, 0, 0, 0.8);
-	box-shadow: 1px 1px 5px 5px #000;
+	box-shadow: 1px 1px 2px 3px #000;
 }
 
 .hscore {
 	animation: flash 1s linear infinite;
 }
-
-@keyframes flash {
-	0% { color: yellow; }
-	50% { color: red; }
-	100% { color: yellow; }
-}
-
-/*.second {
-	animation: bowser 2s linear;
-}
-
-.third {
-	animation: bowser 2s linear;
-}
-
-.fouth {
-	animation: bowser 2s linear;
-}*/
 
 body {
 	font-size: 10.5pt;
@@ -468,6 +461,21 @@ GAME ELEMENTS
 	background-size: contain;
 }
 
+#game_over {
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	width: 599px;
+	height: 102px;
+	transform: translate(-50%, -50%);
+	color: #ff0000;
+	background: url(../img/game_over.png);
+	animation: over_bounce 3s linear;
+	-webkit-animation: over_bounce 3s linear;
+	-moz-animation: over_bounce 3s linear;
+	z-index: 20001;
+}
+
 .fireball {
 	position: absolute;
 	left: 50%;
@@ -482,56 +490,47 @@ GAME ELEMENTS
 }
 
 .explode {
-	position: absolute;
+	position: fixed;
 	height: 80px;
 	width: 80px;
+	transform: translate(-40px, -40px);
 	background: url(../img/explosion_x1.png) no-repeat;
 	background-size: contain;
 	animation: spin 2s linear;
 	animation-iteration-count: 3;
 }
 
-@keyframes spin {
-	0% { transform: rotate(0deg); }
-	25% { transform: rotate(90deg); }
-	50% { transform: rotate(180deg); }
-	75% { transform: rotate(270deg); }
-	100% { transform: rotate(360deg); }
-}
-
-
 .blk_missile {
 	position: absolute;
 	top: 0%;
-	height: 60px;
+	height: 70px;
 	width: 30px;
+	border: 5rem #000;
 	background: #000;
 	background: url(../img/bullet_right.png) no-repeat;
 	background-size: contain;
 }
 
-.blk_missle:active {
-	background: #ff0000;
-	height: 100px;
-	width: 100px;
-}
-
 .red_missile {
-/*	position: absolute;
-	background: url();
-	background: #000;
+	position: absolute;
 	top: 0%;
 	height: 70px;
-	width: 50px;*/
+	width: 30px;
+	border: 5rem transparent;
+	background: #ff0000;
+	background: url(../img/red_right.png) no-repeat;
+	background-size: contain;
 }
 
 .fire_missile {
-/*	position: absolute;
-	background: url();
-	background: #000;
+	position: absolute;
 	top: 0%;
 	height: 70px;
-	width: 50px;*/
+	width: 30px;
+	border: 5rem transparent;
+	background: #ff0000;
+	background: url(../img/fire_bullet.png) no-repeat;
+	background-size: contain;
 }
 
 .mushroom {
@@ -541,7 +540,7 @@ GAME ELEMENTS
 	top: 0%;
 	left: 50;
 	height: 100px;
-	width: 100px;*/
+	width: 100px; */
 }
 
 .fireflower {
@@ -670,21 +669,63 @@ ANIMATIONS
 	}
 }
 
-@keyframes bowser {
+@keyframes spin {
 	0% {
-		transform: translateY(0%);
+		transform: rotate(0deg);
 	}
-	25% {
-		transform: translateY(-5%);
+	25% { 
+		transform: rotate(90deg);
 	}
 	50% {
-		transform: translateY(0%);
+		transform: rotate(180deg);
 	}
 	75% {
-		transform: translateY(5%);
+		transform: rotate(270deg);
 	}
 	100% {
-		transform: translateY(0);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes flash {
+	0% {
+		color: yellow;
+	}
+	50% {
+		color: red;
+	}
+	100% {
+		color: yellow;
+	}
+}
+
+@keyframes over_bounce {
+	0% {
+		top: -5%;
+	}
+	90% {
+		top: 50%;
+	}
+	93% {
+		top: 43%;
+	}
+	95% {
+		top: 45%;
+	}
+	97% {
+		top: 47%;
+	}
+	100% {
+		top: 45%;
+	}
+}
+
+@keyframes endFade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: .7;
 	}
 }
 

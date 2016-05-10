@@ -7,12 +7,12 @@ Slack: @antwisted
 Thanks for visiting! Support GA!
 ************************************/
 
+var game_running, game_values;
 $(document).ready(function (){
 
 "use strict";
 console.log("Game loaded and linked.");
 
-var game_running;
 var video = document.querySelector("video");
 video.pause();
 
@@ -99,7 +99,11 @@ AUDIO CONTROLS
 			life_up = new Audio("./audio/18-1-up.mp3"),
 			star_time = new Audio("./audio/07-invincible-starman.mp3"),
 			mario_down = new Audio("./audio/15-1-down.mp3"),
-			game_over = new Audio("./audio/16-game-over.mp3");
+			mario_over = new Audio("./audio/sm64_mario_game_over.wav"),
+			game_over = new Audio("./audio/16-game-over.mp3"),
+			game_over2 = new Audio("./audio/36-game-over.mp3"),
+			thank_you = new Audio("./audio/sm64_mario_thank_you.wav");
+
 
 // HTML5 Video Options //	
 	var video_mute = $("#sound").on('click', function (){
@@ -188,6 +192,16 @@ GAME BODY
 ************/
 var play_smcb = function (){
 
+// var kill_smcb = setInterval(function (){
+// 	if (!game_running) {
+// 		console.log("Another attempt to kill the game.");
+// 		return game_values = {
+// 			time: time_lapse,
+// 			score: final_score
+// 		}
+// 	}
+// }, 1000);
+
 	setTimeout(function (){
 		bg_lvl1.play();
 		/* REMEMBER LEVEL SELECT FUNCTION && REMOVE FROM QUIT GAME */
@@ -209,6 +223,8 @@ var play_smcb = function (){
 			hrs = 0,
 			missiles_present = 0,
 			score_amount = 0,
+			hit_points = 0,
+			filter_check = 0,
 			clockbreaker = false,
 			level = 1,
 			clock, time_output, score_output, missile_run, random, pick, fire_missile, val;
@@ -219,37 +235,86 @@ var play_smcb = function (){
 	});	
 
 	// Game Page: Quit Function
-	var quit_game = function(){
+	var quit_game = function (){
 		var exit = confirm("Are you sure you want to quit?");
 		if (exit) {
+			return exit_game(true, null);
+		} else {
+			console.log("User quit option: " + exit);
+			return game_running = true;
+		}
+	}
+
+	var exit_game = function(end, win){
+		if (end) {
 			bg_lvl1.pause();
 			// bg.music switch
 			clearInterval(clock);
-			$("#game_bg").hide();
-			$("#game_container").hide();
-			$("#back_bg").show();
-			$("#back_container").show();
-			return game_running = false;
+			
+			setTimeout(function (){
+				mario_over.play();
+				$(game_area).off();
+				setTimeout(function (){
+					var endscreen = $("<div id='blk_end'></div>");
+					var over_logo = $("<div id='game_over'></div>");
+					game_area.append(endscreen).append(over_logo);
+					game_over.play();
+					setTimeout(function (){
+						$("#game_bg").fadeOut(2000);
+						$("#game_container").fadeOut(2000);
+						bg_lvl1.load();
+						$("#back_bg").fadeIn(2000);
+						$("#back_container").fadeIn(2000);
+						setTimeout(function (){
+							endscreen.remove();
+							over_logo.remove();
+							// thank_you.play()
+						}, 3500);
+						return (function(){
+							game_running = false;
+							game_values = {
+								time: time_lapse,
+								score: final_score
+							}
+							console.log("Game running status: " + game_running);
+						})();
+					}, 6000);
+				}, 1500);
+			}, 1500);
 		}
-		console.log("User quit option: " + exit);
-		return game_running = true;
+
+		if (win) {
+			// Some end sequence
+			game_over2.play()
+			console.log("Somebody actually won this impossible game. Damn.");
+			return (function(){
+				game_running = false;
+				game_values = {
+					time: time_lapse,
+					score: final_score
+				}
+				console.log("Game running status: " + game_running);
+			})();
+		}
+	};
+
+	var filter = function (end, win){
+		filter_check++;
+		if (filter_check === 1) {
+			exit_game(true, null);
+		} else {
+			return false;
+		}
 	};
 
 	// Game Page: Quit With Esc Key
-    $(document).on('keyup', function(e){
+ 	$(document).on('keyup', function(e){
 		console.log(e);
 		if (e.keyCode === 27 && game_running) {
 			quit_game();
 		}
 	return false;
 	});
-	
-	// Game Page: Game End
-  var endgame = function(){
-  		// bg.music switch
-    	clearInterval(clock);
-		return game_running = false;
-  };
 	
 	// In Game: Time Function
 	var time_val = function(){
@@ -338,105 +403,122 @@ var play_smcb = function (){
 
 	// Create Missle
 	var create_missile = function(missile_id){
-		var x,
-			missile = {
-				blk : $("<div class='blk_missile active'></div>"),
-				red : $("<div class='red_missile active'></div>"),
-				fire : $("<div class='fire_missile active'></div>")
-			},
-			lvl = function (){
-				if (level === 1) {
-					x = missile.blk.css({
-					"animation": randomizer("b"),
-					"animation-duration": "9s"
-					});
-				}
+		if (game_running) {
+			var x,
+				missile = {
+					blk : $("<div class='blk_missile active'></div>"),
+					red : $("<div class='red_missile active'></div>"),
+					fire : $("<div class='fire_missile active'></div>")	
+				},
+				lvl = function (){
+					if (level === 1) {
+						x = missile.blk.css({
+							"animation": randomizer("b") + " 9s linear"
+						});
+					}
 
-				if (level === 2) {
-					x = missile.red.css({
-						"animation": randomizer("r"),
-					"animation-duration": "9s"
-					});
-				}
+					if (level === 2) {
+						x = missile.red.css({
+							"animation": randomizer("r") + " 9s linear"
+						});
+					}
 
-				if (level === 3) {
-					x = missile.fire.css({
-					"animation": randomizer("f"),
-					"animation-duration": "9s"
-					});
-				}
-			};
+					if (level === 3) {
+						x = missile.fire.css({
+							"animation": randomizer("f") + " 9s linear"
+						});
+					}
+				};
 
-		if (missile_id) {
-			switch (missile_id) {
-				case 1:
-					x = missile.blk.css({
-						"animation": randomizer("b"),
-						"animation-duration": "9s"
-					});
-					break
-				case 2:
-					x = missile.red.css({
-						"animation": randomizer("b"),
-						"animation-duration": "9s"
-					});
-					break
-				case 3:
-					x = missile.fire.css({
-						"animation": randomizer("b"),
-						"animation-duration": "9s"
-					});
-					break
-				default:
-					console.log("There was trouble processing missile_id information.")
-					lvl();		
+			if (missile_id) {
+				switch (missile_id) {
+					case 1:
+						x = missile.blk.css({
+							"animation": randomizer("b") + " 9s linear"
+						});
+						break
+					case 2:
+						x = missile.red.css({
+							"animation": randomizer("r") + " 9s linear"
+						});
+						break
+					case 3:
+						x = missile.fire.css({
+							"animation": randomizer("f") + " 9s linear"
+						});
+						break
+					default:
+						console.log("There was trouble processing missile_id information.")
+						lvl();		
+				}
+			} else {
+				lvl();
 			}
-		} else {
-			lvl();
-		}
 
-		missiles_present += 1;
-    deployed += 1;
-    game_area.append(x);
+			missiles_present += 1;
+	    deployed += 1;
+			setTimeout(function(){
+	    	game_area.append(x);
+	    	x.addClass("noclick");
+	    	setTimeout(function (){
+	    		var check = x.attr("class").split(' ');
+	    		check.forEach(function (i){
+						if (i === "noclick") {
+							x.animate({
+				    		width: "+=50",
+				    		opacity: 0
+				    	}, 2000);
+				    	setTimeout(function (){
+			    			x.remove();	
+			    		}, 3000);
+			    		hit_points += 1
+			    		console.log("Hit points: " + hit_points)
+			    		if (hit_points >= 3) {
+			    			return filter(true, null);
+			    		}
+			    	}
+			    });
+				}, 8000);
+			}, 2000);
 
-		x.on("click", function(){
-	    score_amount += 20;
-	    score_val(score_amount);
-	    missiles_present -= 1;
-	    destroyed += 1;
-	    x.fadeOut(2000);
-	    setTimeout(function (){
-	    	x.remove();	
-	    }, 3000);
-	    
-  	});
+			x.on("click", function(){
+				x.removeClass("noclick");
+		    score_amount += 20;
+		    score_val(score_amount);
+		    missiles_present -= 1;
+		    destroyed += 1;
+		    x.fadeOut(2000);
+		    setTimeout(function (){
+		    	x.remove();	
+		    }, 3000);
+  		});
+	  } else {
+	  	return (function (){
+	  		console.log("Clearing all missile intervals.")
+	  		clearInterval(launch_missiles);
+	  	})();
+	  }
 
-    var expire = function (){
-    	x.remove();
-    }
-    return setTimeout(expire, 9000);
+    return x;
 	};
-
-	// Create functioning Missile destroyed action
-	
+	var launch_missiles = setInterval(create_missile, 3000);
 
 	// Almost missile logic...
 	var launch = function (){
 
 		if (missiles_present < 7){
-			setInterval(create_missile, 700);
+			launch_missiles;
+		} else {
+			clearInterval(launch_missiles);
 		}
 
-		if (missiles_present > 7){
-			clearInterval(create_missile);
-			return false;
+		if (game_running) {
+			setTimeout(function (){
+				return launch();
+			}, 5000);	
 		}
 
-		var hold_it = function (){
-			return launch();
-		}
-		setTimeout(hold_it, 10000);
-
+		return false;
 	};
 
 	// setInterval(launch)
@@ -457,11 +539,11 @@ var play_smcb = function (){
 		setTimeout(f, 300);
 
 		var boom = $("<div class='explode'></div>");
+				// diameter = ("<div class='");
 		boom.css({
-			"position": "absolute",
 			"left": x+"px",
-			"top": y+"px",
-			"transform": "translate(-50%, -50%)"
+			"top": y+"px"
+			// "transform": "translate(-"+x/2+"px, -"+(y/2)+"px)"
 		})
 		setTimeout(function (){
 			game_area.append(boom)
@@ -494,25 +576,27 @@ var play_smcb = function (){
 			level = 1;
 		}
 		if (deployed === 50) {
+			console.log("Level increment achieved. Level: " + level);
 			level = 2;
 		}
 		if ((deployed > 50) && (deployed < 150)) {
 			level = 2;
 		}
 		if (deployed === 150) {
+			console.log("Level increment achieved. Level: " + level);
 			level = 3;
 			// bg.music switch
-			setTimeout(launch(), 5000);
+			// setTimeout(launch, 5000);
 		}
 		if ((deployed > 150) && (deployed < 400)) {	
 			level = 3;
 		}
-		if (current_lvl !== level) {
-			launch();
-		}
+		// if (current_lvl !== level) {
+		// 	launch();
+		// }
 
 		// bg.music switch
-		setTimeout(launch(), 5000);
+		// setTimeout(launch, 5000);
 
 	console.log("level: " + level)
 	return level;
@@ -523,50 +607,59 @@ var play_smcb = function (){
 
 		// Level 1 Deployment Model
 		if (lvl === 1) {
-			launch_array = [1, 1, 1];
+			launch_array = [1, 1];
 			launch_array.forEach(function (e){
-				create_missile(e);
+				setTimeout(function (e){
+					create_missile(e);
+				}, 3000);
 			});
 		}
 		
 		// Level 2 Deployment Model
 		if (lvl === 2) {
-			launch_array = [2, 2, 2, 1, 1, 1];
+			launch_array = [1, 2, 1, 2];
 			launch_array.forEach(function (e){
-				create_missile(e);
+				setTimeout(function (e){
+					create_missile(e);
+				}, 3000);
 			});
 		}
 
 		// Level 3 Deployment Model
 		if (lvl === 3) {
-			launch_array = [3, 3, 3, 1, 2, 2, 2, 1, 3, 2, 1, 2, 2, 3, 3];
+			launch_array = [3, 1, 2, 3, 2, 1, 3,];
 			launch_array.forEach(function (e){
-				create_missile(e);
+				setTimeout(function (e){
+					create_missile(e);
+				}, 3000);
 			});
 		}
 
 		// End game
 		if (deployed > 400) {
-			endgame();
+			exit_game(null, true);
 		}
+
 	};
 
-
   // Initialize SMCB
-	game_running = true;	
-	console.log("Game running status: " + game_running);
-	runtime(time_val);
-	$("#quit_game").on('click', quit_game);
-	$(game_area).on('click', function(e){
-		return create_fireball(e['clientX'], e['clientY']);
-	});
+  var start = function (){
+		game_running = true;
+		console.log("Game running status: " + game_running);
+		runtime(time_val);
+		$("#quit_game").on('click', quit_game);
+		$(game_area).on('click', function(e){
+			return create_fireball(e['clientX'], e['clientY']);
+		});
+	};
 
 	// bg_music.play();
+	start();
 	launch();
 	$(document).on('mousemove', function(e){
 		// console.log(e);
-		if (missiles_present < 7 && game_running) {
-			setTimeout(create_missile(), 300);
+		if (deployed > 7 && game_running) {
+			setTimeout(launch, 1000);
 		}
 		if (deployed === 50 || deployed === 150) {
 			select_level(deployed);
@@ -579,37 +672,9 @@ var play_smcb = function (){
 		};
 	});
 	
-	// var game = function (){
-		// missile_run = dispatch();
-	// 	if (missile_run === 1) {
-	// 		console.log("Additional logic for level 1");
-	// 	} else if (missile_run === 2) {
-	// 		console.log("Additional logic for level 2");
-	// 	} else if (missile_run === 3) {
-	// 		console.log("Additional logic for level 1");
-	// 	}
-	// setInterval(game, 3000);
-	// };
-
-	// var yDeg = calc_angle(start_point, end_point);
-	// var have_missile_rotate = $(x).css({ // PAIR TO (LGest trans to SMest)
-	// transition: rotate(yDeg @ angle of descent)
-	// time.fight_back //laser && PAIR TO time.elapsed += frequency++
-	// if (time > z.elapsed)
-	// 	+ enemy_missile();
-
-	// if (clockbreaker) {
-		// console.log("Must capture time value or display for clockbreakers.");
-	// if (i = 2) {
-	// clearInterval(time_val, 1000);	
-	// bg_music.pause();
- 	// video.load();
-	// $("#game_bg").hide();
-	// $("#game_container").hide();
-	// $("#back_bg").show();
-	// $("#back_container").show();
-	// return game_running = false;
-
+// End play_scmb() //
 	}
-}
+// End gameStart() //
+	}
+// End (document).ready() //
 });
