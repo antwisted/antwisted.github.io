@@ -206,6 +206,10 @@ PAGE ELEMENTS
 	cursor: pointer;
 }
 
+#level, #time, #score {
+	font-size: 1.4em;
+}
+
 .box_header {
 	padding-bottom: 2rem;
 }

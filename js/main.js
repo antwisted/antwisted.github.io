@@ -7,7 +7,13 @@ Slack: @antwisted
 Thanks for visiting! Support GA!
 ************************************/
 
-var game_running, game_values;
+var game_running,
+		record = {
+			level: 1,
+			time: 0,
+			score: 0,
+			hscore: 0
+		};
 $(document).ready(function (){
 
 "use strict";
@@ -192,20 +198,11 @@ GAME BODY
 ************/
 var play_smcb = function (){
 
-// var kill_smcb = setInterval(function (){
-// 	if (!game_running) {
-// 		console.log("Another attempt to kill the game.");
-// 		return game_values = {
-// 			time: time_lapse,
-// 			score: final_score
-// 		}
-// 	}
-// }, 1000);
-
 	setTimeout(function (){
 		bg_lvl1.play();
 		/* REMEMBER LEVEL SELECT FUNCTION && REMOVE FROM QUIT GAME */
 	}, 800);
+
 	// In Game: Default Variables
 	var score_box = $("#score_box");
 	$(score_box).html("<p id='score_box' class='gametext_med'>MARIO</br>000000</p>");
@@ -274,11 +271,19 @@ var play_smcb = function (){
 						}, 3500);
 						return (function(){
 							game_running = false;
-							game_values = {
-								time: time_lapse,
-								score: final_score
-							}
+							record.level = level;
+							record.time = time_lapse;
+							record.score = final_score;
 							console.log("Game running status: " + game_running);
+							$("#level").html("Level " + record.level);
+							$("#time").html(Math.floor(record.time/60) + ":" + record.time%60);
+							$("#score").html(record.score);
+							if (record.score > record.hscore) {
+								record.hscore = record.score;
+								$(".hscore").show();
+							} else {
+								$(".hscore").hide();
+							}
 						})();
 					}, 6000);
 				}, 1500);
@@ -291,7 +296,8 @@ var play_smcb = function (){
 			console.log("Somebody actually won this impossible game. Damn.");
 			return (function(){
 				game_running = false;
-				game_values = {
+				record = {
+					level: level,
 					time: time_lapse,
 					score: final_score
 				}
@@ -367,20 +373,15 @@ var play_smcb = function (){
 
 	// In Game: Score Function
 	var score_val = function(score, game_check){
-		final_score += score;
 		val = score.toString();
 		for (var j = 6; val.length < j;) {
 			val = "0" + val;
-		}
-		
-		if (game_check === 1) {
-			console.log("Will display score value for end game.");
 		}
 
 		if (game_running) {
 		score_box.html("<p id='score_box' class='gametext_med'>MARIO</br>" + val + "</p>");
 		} 
-	return final_score;
+	return final_score = parseInt(val)
 	};
 
 	// Random Missle Placement
