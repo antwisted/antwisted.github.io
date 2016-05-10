@@ -10,3 +10,4 @@ Missile Command is a 1980 arcade game by Atari, Inc. that was also licensed to S
 - Health bar indicating times missiles landed
 - Transitions between new levels
 - Refactored missile deployment system
+- Bowswer speech bug fix
