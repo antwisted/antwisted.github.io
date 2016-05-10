@@ -227,6 +227,7 @@ var play_smcb = function (){
 			filter_check = 0,
 			clockbreaker = false,
 			level = 1,
+			difficulty = 0,
 			clock, time_output, score_output, missile_run, random, pick, fire_missile, val;
 
   // Game Page: Pause Game Button
@@ -250,6 +251,7 @@ var play_smcb = function (){
 			bg_lvl1.pause();
 			// bg.music switch
 			clearInterval(clock);
+			clearInterval(launch_missiles);
 			
 			setTimeout(function (){
 				mario_over.play();
@@ -401,6 +403,10 @@ var play_smcb = function (){
 	return random[pick];
 	};
 
+	var randomfire = function (){
+		return Math.round(Math.random(3000) * 10000);
+	};
+
 	// Create Missle
 	var create_missile = function(missile_id){
 		if (game_running) {
@@ -479,7 +485,7 @@ var play_smcb = function (){
 			    	}
 			    });
 				}, 8000);
-			}, 2000);
+			}, randomfire);
 
 			x.on("click", function(){
 				x.removeClass("noclick");
@@ -506,16 +512,14 @@ var play_smcb = function (){
 	// Almost missile logic...
 	var launch = function (){
 
-		if (missiles_present < 7){
+		if (deployed < 7){
 			launch_missiles;
-		} else {
-			clearInterval(launch_missiles);
+			difficulty++;
 		}
 
-		if (game_running) {
-			setTimeout(function (){
-				return launch();
-			}, 5000);	
+		if ((difficulty === 0) && (level === 3)) {
+			launch_missiles;
+			difficulty++;
 		}
 
 		return false;
@@ -561,12 +565,12 @@ var play_smcb = function (){
   	var wario;
   	var bowswer;
   	
-  	launch();
+  	// launch();
   };
 
   var create_multiplier = function (lvl){
-  	
-  	launch();
+
+  	// launch();
   };
 
 	var select_level = function (deployed){
@@ -611,7 +615,7 @@ var play_smcb = function (){
 			launch_array.forEach(function (e){
 				setTimeout(function (e){
 					create_missile(e);
-				}, 3000);
+				}, randomfire);
 			});
 		}
 		
@@ -621,7 +625,7 @@ var play_smcb = function (){
 			launch_array.forEach(function (e){
 				setTimeout(function (e){
 					create_missile(e);
-				}, 3000);
+				}, randomfire);
 			});
 		}
 
@@ -631,7 +635,7 @@ var play_smcb = function (){
 			launch_array.forEach(function (e){
 				setTimeout(function (e){
 					create_missile(e);
-				}, 3000);
+				}, randomfire);
 			});
 		}
 
@@ -658,9 +662,6 @@ var play_smcb = function (){
 	launch();
 	$(document).on('mousemove', function(e){
 		// console.log(e);
-		if (deployed > 7 && game_running) {
-			setTimeout(launch, 1000);
-		}
 		if (deployed === 50 || deployed === 150) {
 			select_level(deployed);
 		}
