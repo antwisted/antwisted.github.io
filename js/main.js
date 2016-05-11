@@ -601,7 +601,6 @@ var play_smcb = function (){
 			launch_missiles;
 			difficulty++;
 		}
-
 		return false;
 	};
 
