@@ -468,10 +468,10 @@ var play_smcb = function (){
 	    		var check2 = x.attr("class").split(' ');
 	    		check2.forEach(function (i){
 						if (i === "noclick") {
-							x.addClass("active").fadeOut(1200);
+							x.addClass("active").fadeOut(700);
 				    	setTimeout(function (){
 			    			x.remove();	
-			    		}, 3000);
+			    		}, 2000);
 			    		hit_points += 1
 			    		console.log("Hit points: " + hit_points)
 			    		if (hit_points >= 3) {

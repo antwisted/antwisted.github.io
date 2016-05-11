@@ -507,33 +507,33 @@ GAME ELEMENTS
 .blk_missile {
 	position: absolute;
 	top: 0%;
-	height: 70px;
+	height: 55px;
 	width: 30px;
-	border: 30px #000;
+	padding: 0 20px;
 	background: #000;
-	background: url(../img/bullet_right.png) no-repeat;
+	background: url(../img/bullet_right.png) center center no-repeat;
 	background-size: contain;
 }
 
 .red_missile {
 	position: absolute;
 	top: 0%;
-	height: 70px;
+	height: 55px;
 	width: 30px;
-	border: 5rem transparent;
+	padding: 0 20px;
 	background: #ff0000;
-	background: url(../img/red_right.png) no-repeat;
+	background: url(../img/red_right.png) center center no-repeat;
 	background-size: contain;
 }
 
 .fire_missile {
 	position: absolute;
 	top: 0%;
-	height: 70px;
+	height: 55px;
 	width: 30px;
-	border: 5rem transparent;
+	padding: 0 20px;
 	background: #ff0000;
-	background: url(../img/fire_bullet.png) no-repeat;
+	background: url(../img/fire_bullet.png) center center no-repeat;
 	background-size: contain;
 }
 
