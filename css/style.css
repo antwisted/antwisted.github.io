@@ -517,7 +517,7 @@ GAME ELEMENTS
 
 .red_missile {
 	position: absolute;
-	top: -5%;
+	top: -12%;
 	height: 55px;
 	width: 30px;
 	padding: 0 20px;
@@ -528,8 +528,8 @@ GAME ELEMENTS
 
 .fire_missile {
 	position: absolute;
-	top: -5%;
-	height: 55px;
+	top: -20%;
+	height: 100px;
 	width: 30px;
 	padding: 0 20px;
 	background: #ff0000;

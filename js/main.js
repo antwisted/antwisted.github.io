@@ -280,17 +280,53 @@ var play_smcb = function (){
 
 		if (win) {
 			// Some end sequence
-			game_over2.play()
+			now_playing.pause();
+			clearInterval(clock);
+			clearInterval(launch_missiles);
+			yahoo.play();
 			console.log("Somebody actually won this impossible game. Damn.");
-			return (function(){
-				game_running = false;
-				data = {
-					level: level,
-					time: time_lapse,
-					score: final_score
-				}
-				console.log("Game running status: " + game_running);
-			})();
+			setTimeout(function (){
+				$(game_area).off();
+				setTimeout(function (){
+					var over_logo = $("<div id='game_over'></div>");
+					game_area.append(over_logo);
+					// game_over.play();
+					game_over2.play();
+					setTimeout(function (){
+						$("#game_bg").fadeOut(2000);
+						$("#game_container").fadeOut(2000);
+						bg_lvl1.load();
+						bg_lvl2.load();
+						now_playing.load();
+						$("#back_bg").fadeIn(2000);
+						$("#back_container").fadeIn(2000);
+						setTimeout(function (){
+							endscreen.remove();
+							over_logo.remove();
+							if (data.thanks === false) {
+								thank_you.play();
+								data.thanks = true;
+							}
+						}, 3500);
+						return (function(){
+							game_running = false;
+							data.level = level;
+							data.time = time_lapse;
+							data.score = final_score;
+							console.log("Game running status: " + game_running);
+							$("#level").html("Level " + data.level);
+							$("#time").html(Math.floor(data.time/60) + ":" + (data.time%60 >= 10 ? data.time%60 : "0"+data.time%60));
+							$("#score").html(data.score);
+							if (data.score > data.hscore) {
+								data.hscore = data.score;
+								$(".hscore").show();
+							} else {
+								$(".hscore").hide();
+							}
+						})();
+					}, 6000);
+				}, 1500);
+			}, 1500);
 		}
 	};
 
