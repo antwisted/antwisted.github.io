@@ -7,14 +7,6 @@ Slack: @antwisted
 Thanks for visiting! Support GA!
 ************************************/
 
-var game_running,
-		record = {
-			level: 1,
-			time: 0,
-			score: 0,
-			hscore: 0,
-			thanks: false
-		};
 $(document).ready(function (){
 
 "use strict";
@@ -31,7 +23,7 @@ setTimeout(function (){
 	setTimeout(function (){
 		$("#blk_begin").fadeOut(2000);
 		setTimeout(function (){
-			gameStart();
+			game_start();
 			setTimeout(function (){
 				$("#blk_begin").remove();
 			}, 2000);
@@ -39,16 +31,17 @@ setTimeout(function (){
 	}, 2500);
 }, 3800);
 
-
-var gameStart = function () {
+// Game Function Managing All Loops //
+var game_start = function () {
 
 // Splash Screen Functions //
 	$("#front_container").fadeIn(2500);
 	$("#fc_one").fadeIn(2500);
 	$("#front_bg").fadeIn(2500);
 	
-	var bowser_boast = function () {
+	var bowser_boast = function () { 
 		setTimeout(function (){
+			if (video.currentTime > 60) {
 			// $(".bowser").show(); // dual animations?
 			$("#first").show();
 			setTimeout(function (){
@@ -75,19 +68,12 @@ var gameStart = function () {
 					}, 3000);
 				}, 2750);
 			}, 2400);
+			}
 		}, 63800);
 	};
 
 	video.play();
 	bowser_boast();
-
-	// var firepoint = $("<style>").text("");
-	// $("head").append(firepoint);
-	
-	// first 1:04 64000 - 2s
-	// second 1:06 66000 - 5s
-	// third 1:15 75000 - 2s
-	// fourth 1:17.5 77500 - 6s (different fade)
 
 
 /************
@@ -135,6 +121,7 @@ AUDIO CONTROLS
 /************
 BUTTONS
 ************/
+
 // Front Page: Initiate Game //
 	var start_button = $("#start").on('click', function (){
 		video.pause();
@@ -197,14 +184,11 @@ BUTTONS
 /************
 GAME BODY
 ************/
+
+// Primary Game Function //
 var play_smcb = function (){
 
-	setTimeout(function (){
-		bg_lvl1.play();
-		/* REMEMBER LEVEL SELECT FUNCTION && REMOVE FROM QUIT GAME */
-	}, 800);
-
-	// In Game: Default Variables
+// In Game: Default Variables //
 	var score_box = $("#score_box");
 	$(score_box).html("<p id='score_box' class='gametext_med'>MARIO</br>000000</p>");
 	var time_box = $("#time_box");
@@ -226,18 +210,18 @@ var play_smcb = function (){
 			clockbreaker = false,
 			level = 1,
 			difficulty = 0,
-			clock, time_output, score_output, missile_run, random, pick, fire_missile, val;
+			clock, time_output, score_output, missile_run, random, pick, fire_missile, val, now_playing;
 
-  // Game Page: Pause Game Button
+// Game Page: Pause Game Button //
 	var pause_game = $("#pause_game").on('click', function(){
 		alert("The game has been paused. Press okay to return to the game.");
 	});	
 
-	// Game Page: Quit Function
+// Game Page: Quit Function //
 	var quit_game = function (){
 		var exit = confirm("Are you sure you want to quit?");
 		if (exit) {
-			return exit_game(true, null);
+			return filter(true, null);
 		} else {
 			console.log("User quit option: " + exit);
 			return game_running = true;
@@ -246,11 +230,9 @@ var play_smcb = function (){
 
 	var exit_game = function(end, win){
 		if (end) {
-			bg_lvl1.pause();
-			// bg.music switch
+			now_playing.pause();
 			clearInterval(clock);
 			clearInterval(launch_missiles);
-			
 			setTimeout(function (){
 				mario_over.play();
 				$(game_area).off();
@@ -263,27 +245,29 @@ var play_smcb = function (){
 						$("#game_bg").fadeOut(2000);
 						$("#game_container").fadeOut(2000);
 						bg_lvl1.load();
+						bg_lvl2.load();
+						now_playing.load();
 						$("#back_bg").fadeIn(2000);
 						$("#back_container").fadeIn(2000);
 						setTimeout(function (){
 							endscreen.remove();
 							over_logo.remove();
-							if (record.thanks === false) {
+							if (data.thanks === false) {
 								thank_you.play();
-								record.thanks = true;
+								data.thanks = true;
 							}
 						}, 3500);
 						return (function(){
 							game_running = false;
-							record.level = level;
-							record.time = time_lapse;
-							record.score = final_score;
+							data.level = level;
+							data.time = time_lapse;
+							data.score = final_score;
 							console.log("Game running status: " + game_running);
-							$("#level").html("Level " + record.level);
-							$("#time").html(Math.floor(record.time/60) + ":" + record.time%60);
-							$("#score").html(record.score);
-							if (record.score > record.hscore) {
-								record.hscore = record.score;
+							$("#level").html("Level " + data.level);
+							$("#time").html(Math.floor(data.time/60) + ":" + (data.time%60 >= 10 ? data.time%60 : "0"+data.time%60));
+							$("#score").html(data.score);
+							if (data.score > data.hscore) {
+								data.hscore = data.score;
 								$(".hscore").show();
 							} else {
 								$(".hscore").hide();
@@ -300,7 +284,7 @@ var play_smcb = function (){
 			console.log("Somebody actually won this impossible game. Damn.");
 			return (function(){
 				game_running = false;
-				record = {
+				data = {
 					level: level,
 					time: time_lapse,
 					score: final_score
@@ -313,7 +297,7 @@ var play_smcb = function (){
 	var filter = function (end, win){
 		filter_check++;
 		if (filter_check === 1) {
-			exit_game(true, null);
+			exit_game(end, win);
 		} else {
 			return false;
 		}
@@ -321,7 +305,6 @@ var play_smcb = function (){
 
 	// Game Page: Quit With Esc Key
  	$(document).on('keyup', function(e){
-		console.log(e);
 		if (e.keyCode === 27 && game_running) {
 			quit_game();
 		}
@@ -348,34 +331,33 @@ var play_smcb = function (){
 				min = 0;
 
 				// Clock Breaker - Spec. Infinity Mode
-				if (hrs === 10) {
-					time_box.html("<p id='time_box' class='gametext_med'>BROKEN!<br />99:99</p>");
-					clockbreaker = true;
-					return clearInterval(clock);
-				}
+				// if (hrs === 10) {
+				// 	time_box.html("<p id='time_box' class='gametext_med'>BROKEN!<br />99:99</p>");
+				// 	clockbreaker = true;
+				// 	return clearInterval(clock);
+				// }
 				time_output = hrs+"0:00";
 			}
 		}
 
-		// Display Output
+// Display Output //
 		if (game_running) {
 			time_box.html("<p id='time_box' class='gametext_med'>TIME</br>" + time_output + "</p>");
-		} else {
-			console.log("Will display time value for end game.");
 		}
 	return time_lapse;
 	};
 
-	// In Game: Initiate Time
+// In Game: Initiate Time //
 	var runtime = function(tick){
-		if (clockbreaker) {
-			return console.log("The force is strong with this one...")
-		}
+		// Clock Breaker - Spec. Infinity Mode
+		// if (clockbreaker) {
+		// 	return console.log("The force is strong with this one...")
+		// }
 		clock = setInterval(tick, 1000);
 	return clock;
 	};
 
-	// In Game: Score Function
+// In Game: Score Function //
 	var score_val = function(score, game_check){
 		val = score.toString();
 		for (var j = 6; val.length < j;) {
@@ -388,9 +370,9 @@ var play_smcb = function (){
 	return final_score = parseInt(val)
 	};
 
-	// Random Missle Placement
+// Random Missle Trajectory //
 	var randomizer = function(missile_id){
-		pick = Math.round(Math.random() * 12);
+		pick = Math.round(Math.random() * 11);
 		switch (missile_id) {
 			case "b":
 				random = ["blk_one", "blk_two", "blk_three", "blk_four", "blk_five", "blk_six", "blk_seven", "blk_eight", "blk_nine", "blk_ten", "blk_eleven", "blk_twelve"];
@@ -408,18 +390,19 @@ var play_smcb = function (){
 	return random[pick];
 	};
 
+// Random Missile Fire //
 	var randomfire = function (){
 		return Math.round(Math.random(3000) * 10000);
 	};
 
-	// Create Missle
+// Create Missle Functions //
 	var create_missile = function(missile_id){
 		if (game_running) {
 			var x,
 				missile = {
-					blk : $("<div class='blk_missile active'></div>"),
-					red : $("<div class='red_missile active'></div>"),
-					fire : $("<div class='fire_missile active'></div>")	
+					blk : $("<div class='blk_missile'></div>"),
+					red : $("<div class='red_missile'></div>"),
+					fire : $("<div class='fire_missile'></div>")	
 				},
 				lvl = function (){
 					if (level === 1) {
@@ -466,19 +449,26 @@ var play_smcb = function (){
 				lvl();
 			}
 
+			// Check For Randomizer Error
+			var check1 = x.attr("class").split(' ');
+  		check1.forEach(function (i){
+				if (i === "undefined") {
+					x.remove();
+	    		return create_missile();
+	    	}
+	    });
+
+			// Add Missiles & Impact Detection
 			missiles_present += 1;
 	    deployed += 1;
 			setTimeout(function(){
 	    	game_area.append(x);
 	    	x.addClass("noclick");
 	    	setTimeout(function (){
-	    		var check = x.attr("class").split(' ');
-	    		check.forEach(function (i){
+	    		var check2 = x.attr("class").split(' ');
+	    		check2.forEach(function (i){
 						if (i === "noclick") {
-							x.animate({
-				    		width: "+=50",
-				    		opacity: 0
-				    	}, 2000);
+							x.addClass("active").fadeOut(1200);
 				    	setTimeout(function (){
 			    			x.remove();	
 			    		}, 3000);
@@ -489,19 +479,22 @@ var play_smcb = function (){
 			    		}
 			    	}
 			    });
-				}, 8000);
+				}, 8300);
 			}, randomfire);
 
+			// Missile Destroyed
 			x.on("click", function(){
-				x.removeClass("noclick");
-		    score_amount += 20;
-		    score_val(score_amount);
-		    missiles_present -= 1;
-		    destroyed += 1;
-		    x.fadeOut(2000);
-		    setTimeout(function (){
-		    	x.remove();	
-		    }, 3000);
+				x.off().removeClass("noclick");
+				setTimeout(function (){
+					x.addClass("active").fadeOut(1200);
+			    score_amount += 20;
+			    score_val(score_amount);
+			    missiles_present -= 1;
+			    destroyed += 1;
+			    setTimeout(function (){
+			    	x.remove();	
+			    }, 3000);
+				}, 350);
   		});
 	  } else {
 	  	return (function (){
@@ -509,114 +502,18 @@ var play_smcb = function (){
 	  		clearInterval(launch_missiles);
 	  	})();
 	  }
-
     return x;
 	};
-	var launch_missiles = setInterval(create_missile, 3000);
+	// Set Oncoming Missiles
+	var launch_missiles = setInterval(create_missile, 2500);
 
-	// Almost missile logic...
-	var launch = function (){
-
-		if (deployed < 7){
-			launch_missiles;
-			difficulty++;
-		}
-
-		if ((difficulty === 0) && (level === 3)) {
-			launch_missiles;
-			difficulty++;
-		}
-
-		return false;
-	};
-
-	// setInterval(launch)
-
-	var create_fireball = function(x, y){
-		var fireball = $("<div class='fireball'></div>");
-		game_area.append(fireball);
-		fireball.animate({
-			left: x+"px",
-			top: y+"px",
-		}, 200);
-		var f = function(){
-			fireball.animate({
-				opacity: 0
-			}, 500);
-			fireball.remove();
-		}
-		setTimeout(f, 300);
-
-		var boom = $("<div class='explode'></div>");
-				// diameter = ("<div class='");
-		boom.css({
-			"left": x+"px",
-			"top": y+"px"
-			// "transform": "translate(-"+x/2+"px, -"+(y/2)+"px)"
-		})
-		setTimeout(function (){
-			game_area.append(boom)
-			setTimeout(function (){
-	    	boom.fadeOut(2200)
-	  		setTimeout(function (){
-	    		boom.remove();
-	    	}, 3000);
-	    }, 1000);
-	  }, 300);
-  };
-
-  var create_boss = function (lvl){
-  	var boo;
-  	var wario;
-  	var bowswer;
-  	
-  	// launch();
-  };
-
-  var create_multiplier = function (lvl){
-
-  	// launch();
-  };
-
-	var select_level = function (deployed){
-		var current_lvl = level;
-
-		if (deployed < 50) {
-			level = 1;
-		}
-		if (deployed === 50) {
-			console.log("Level increment achieved. Level: " + level);
-			level = 2;
-		}
-		if ((deployed > 50) && (deployed < 150)) {
-			level = 2;
-		}
-		if (deployed === 150) {
-			console.log("Level increment achieved. Level: " + level);
-			level = 3;
-			// bg.music switch
-			// setTimeout(launch, 5000);
-		}
-		if ((deployed > 150) && (deployed < 400)) {	
-			level = 3;
-		}
-		// if (current_lvl !== level) {
-		// 	launch();
-		// }
-
-		// bg.music switch
-		// setTimeout(launch, 5000);
-
-	console.log("level: " + level)
-	return level;
-	};
-
+// Difficulty Increment: Missile Waves //
 	var missile_push = function (lvl){
 		var launch_array = [];
 
 		// Level 1 Deployment Model
 		if (lvl === 1) {
-			launch_array = [1, 1];
+			launch_array = [1, 1, 1];
 			launch_array.forEach(function (e){
 				setTimeout(function (e){
 					create_missile(e);
@@ -636,7 +533,8 @@ var play_smcb = function (){
 
 		// Level 3 Deployment Model
 		if (lvl === 3) {
-			launch_array = [3, 1, 2, 3, 2, 1, 3,];
+			launch();
+			launch_array = [3, 2, 3, 2,];
 			launch_array.forEach(function (e){
 				setTimeout(function (e){
 					create_missile(e);
@@ -645,13 +543,146 @@ var play_smcb = function (){
 		}
 
 		// End game
-		if (deployed > 400) {
-			exit_game(null, true);
+		if (deployed > 150) {
+			filter(null, true);
 		}
 
 	};
 
-  // Initialize SMCB
+// Difficulty Increment: Multiple Intervals //	
+	var launch = function (){
+
+		if (deployed < 7) {
+			launch_missiles;
+			difficulty++;
+		}
+
+		if ((difficulty === 1) && (level === 3)) {
+			launch_missiles;
+			difficulty++;
+		}
+
+		if ((deployed > 120) && (difficulty < 2)) {
+			launch_missiles;
+			difficulty++;
+		}
+
+		return false;
+	};
+
+// Create Fireball Functions //
+	var create_fireball = function(x, y){
+		var fireball = $("<div class='fireball'></div>");
+		game_area.append(fireball);
+		fireball.animate({
+			left: x+"px",
+			top: y+"px",
+		}, 200);
+		var f = function(){
+			fireball.animate({
+				opacity: 0
+			}, 500);
+			fireball.remove();
+		}
+		setTimeout(f, 300);
+
+		var boom = $("<div class='explode'></div>");
+		boom.css({
+			"left": x+"px",
+			"top": y+"px",
+			// not working
+			"transform": "translate(-"+(x/2)+"px, -"+(y/2)+"px)"
+		})
+		setTimeout(function (){
+			game_area.append(boom)
+			setTimeout(function (){
+	    	boom.fadeOut(2200)
+	  		setTimeout(function (){
+	    		boom.remove();
+	    	}, 3000);
+	    }, 1000);
+	  }, 300);
+  };
+
+  // Mini Bosses - Spec. Level Additions
+  // var create_boss = function (lvl){
+	//   var boo;
+	//   var wario;
+	//   var bowswer;
+	//   launch();
+  // };
+
+  // var create_multiplier = function (lvl){
+  // 	launch();
+  // };
+
+// Select Level Function //
+	var select_level = function (){
+
+		if (deployed < 50) {
+			level = 1;
+			console.log("Current Level: " + level);
+			if (now_playing !== bg_lvl1) {
+				now_playing = bg_lvl1;
+				setTimeout(function (){
+					now_playing.play();
+				}, 800);
+			}
+		}
+		if (deployed === 50) {
+			level = 2;
+			console.log("Level increment achieved.");
+			console.log("Current Level: " + level);
+			if (now_playing !== bg_lvl2) {
+				now_playing.pause();
+				now_playing = bg_lvl2;
+				setTimeout(function (){
+					now_playing.play();
+				}, 800);
+			}
+		}
+		if ((deployed > 50) && (deployed < 150)) {
+			level = 2;
+			console.log("Current Level: " + level);
+			if (now_playing !== bg_lvl2) {
+				now_playing.pause();
+				now_playing = bg_lvl2;
+				now_playing.load();
+				now_playing.play();
+			}
+		}
+		if (deployed === 150) {
+			level = 3;
+			console.log("Level increment achieved.");
+			console.log("Current Level: " + level)
+			if (now_playing !== bg_lvl1) {
+				now_playing.pause();
+				now_playing = bg_lvl1;
+				now_playing.load();
+				setTimeout(function (){
+					bg_lvl1.play();
+				}, 800);
+			}
+		}
+		if ((deployed > 150) && (deployed < 400)) {	
+			level = 3;
+			console.log("Current Level: " + level);
+			if (now_playing !== bg_lvl1) {
+				now_playing.pause();
+				now_playing = bg_lvl1;
+				now_playing.load();
+				now_playing.play();
+			}
+		}
+
+	if (now_playing.ended) {
+		now_playing.load();
+		now_playing.play();
+	}
+	return level;
+	};
+
+// Initialize SMCB Gameplay //
   var start = function (){
 		game_running = true;
 		console.log("Game running status: " + game_running);
@@ -661,14 +692,14 @@ var play_smcb = function (){
 			return create_fireball(e['clientX'], e['clientY']);
 		});
 	};
-
-	// bg_music.play();
 	start();
 	launch();
-	$(document).on('mousemove', function(e){
-		// console.log(e);
-		if (deployed === 50 || deployed === 150) {
-			select_level(deployed);
+	select_level();
+
+// Game Monitor //
+	$(document).on('mousemove', function(){
+		if (deployed === 30 || deployed === 70) {
+			select_level();
 		}
 		if (deployed % 10 === 0 && level < 3) {
 			missile_push(level);
@@ -680,7 +711,9 @@ var play_smcb = function (){
 	
 // End play_scmb() //
 	}
-// End gameStart() //
+// End game_start() //
 	}
 // End (document).ready() //
 });
+// Game Status Monitor and Record Data Object
+var game_running, data = { level: 1, time: 0, score: 0, hscore: 0, thanks: false };
