@@ -496,6 +496,11 @@ var play_smcb = function (){
 			    }, 3000);
 				}, 350);
   		});
+
+  		// Win The Game
+			if (deployed >= 200) {
+				filter(null, true);
+			}
 	  } else {
 	  	return (function (){
 	  		console.log("Clearing all missile intervals.")
@@ -514,7 +519,7 @@ var play_smcb = function (){
 		// Level 1 Deployment Model
 		if (lvl === 1) {
 			launch_array = [1, 1, 1];
-			launch_array.forEach(function (e){
+			return launch_array.forEach(function (e){
 				setTimeout(function (e){
 					create_missile(e);
 				}, randomfire);
@@ -524,7 +529,7 @@ var play_smcb = function (){
 		// Level 2 Deployment Model
 		if (lvl === 2) {
 			launch_array = [1, 2, 1, 2];
-			launch_array.forEach(function (e){
+			return launch_array.forEach(function (e){
 				setTimeout(function (e){
 					create_missile(e);
 				}, randomfire);
@@ -535,18 +540,12 @@ var play_smcb = function (){
 		if (lvl === 3) {
 			launch();
 			launch_array = [3, 2, 3, 2,];
-			launch_array.forEach(function (e){
+			return launch_array.forEach(function (e){
 				setTimeout(function (e){
 					create_missile(e);
 				}, randomfire);
 			});
 		}
-
-		// End game
-		if (deployed > 150) {
-			filter(null, true);
-		}
-
 	};
 
 // Difficulty Increment: Multiple Intervals //	
@@ -562,7 +561,7 @@ var play_smcb = function (){
 			difficulty++;
 		}
 
-		if ((deployed > 120) && (difficulty < 2)) {
+		if ((deployed > 150) && (difficulty < 2)) {
 			launch_missiles;
 			difficulty++;
 		}
@@ -641,7 +640,7 @@ var play_smcb = function (){
 				}, 800);
 			}
 		}
-		if ((deployed > 50) && (deployed < 150)) {
+		if ((deployed > 50) && (deployed < 100)) {
 			level = 2;
 			console.log("Current Level: " + level);
 			if (now_playing !== bg_lvl2) {
@@ -651,7 +650,7 @@ var play_smcb = function (){
 				now_playing.play();
 			}
 		}
-		if (deployed === 150) {
+		if (deployed === 100) {
 			level = 3;
 			console.log("Level increment achieved.");
 			console.log("Current Level: " + level)
@@ -664,7 +663,7 @@ var play_smcb = function (){
 				}, 800);
 			}
 		}
-		if ((deployed > 150) && (deployed < 400)) {	
+		if ((deployed > 100) && (deployed < 200)) {	
 			level = 3;
 			console.log("Current Level: " + level);
 			if (now_playing !== bg_lvl1) {
@@ -698,7 +697,7 @@ var play_smcb = function (){
 
 // Game Monitor //
 	$(document).on('mousemove', function(){
-		if (deployed === 30 || deployed === 70) {
+		if (deployed === 50 || deployed === 100) {
 			select_level();
 		}
 		if (deployed % 10 === 0 && level < 3) {
