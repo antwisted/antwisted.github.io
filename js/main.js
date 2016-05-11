@@ -190,9 +190,9 @@ var play_smcb = function (){
 
 // In Game: Default Variables //
 	var score_box = $("#score_box");
-	$(score_box).html("<p id='score_box' class='gametext_med'>MARIO</br>000000</p>");
+	$(score_box).html("<p id='score_box' class='gametext_med'>MARIO&nbsp;*3<br />000000</p>");
 	var time_box = $("#time_box");
-	$(time_box).html("<p id='time_box' class='gametext_med'>TIME</br>00:00</p>");
+	$(time_box).html("<p id='time_box' class='gametext_med'>TIME<br />00:00</p>");
 	var score_e = $("#score_");
 	var time_e = $("#time");
 	var game_area = $("#game_bg");
@@ -209,6 +209,7 @@ var play_smcb = function (){
 			filter_check = 0,
 			clockbreaker = false,
 			level = 1,
+			life = 3,
 			difficulty = 0,
 			clock, time_output, score_output, missile_run, random, pick, fire_missile, val, now_playing;
 
@@ -401,7 +402,7 @@ var play_smcb = function (){
 		}
 
 		if (game_running) {
-		score_box.html("<p id='score_box' class='gametext_med'>MARIO</br>" + val + "</p>");
+		score_box.html("<p id='score_box' class='gametext_med'>MARIO&nbsp;*" + (life > 0 ? life : 0) + "</br>" + val + "</p>");
 		} 
 	return final_score = parseInt(val)
 	};
@@ -508,7 +509,8 @@ var play_smcb = function (){
 				    	setTimeout(function (){
 			    			x.remove();	
 			    		}, 2000);
-			    		hit_points += 1
+			    		hit_points += 1;
+			    		life -= 1;
 			    		console.log("Hit points: " + hit_points)
 			    		if (hit_points >= 3) {
 			    			return filter(true, null);

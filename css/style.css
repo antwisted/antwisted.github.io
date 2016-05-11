@@ -434,14 +434,14 @@ GAME ELEMENTS
 	cursor: pointer;
 }
 
-#time_box {
-	position: absolute;
-	left: 80%;
-}
-
 #score_box {
 	position: absolute;
 	left: 10%;
+}
+
+#time_box {
+	position: absolute;
+	left: 85%;
 }
 
 #mario_sprite {
