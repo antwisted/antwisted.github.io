@@ -263,11 +263,13 @@ var play_smcb = function (){
 						setTimeout(function (){
 							endscreen.remove();
 							over_logo.remove();
-							if (data.thanks === false) {
-								thank_you.play();
-								data.thanks = true;
-							}
-						}, 3500);
+							setTimeout(function (){
+								if (data.thanks === false) {
+									thank_you.play();
+									data.thanks = true;
+								}
+							}, 2000);
+						}, 1500);
 						return (function(){
 							game_running = false;
 							data.level = level;
@@ -313,9 +315,8 @@ var play_smcb = function (){
 						$("#back_container").fadeIn(2000);
 						setTimeout(function (){
 							game_over2.play();
+							over_logo.remove();
 							setTimeout(function (){
-								endscreen.remove();
-								over_logo.remove();
 								if (data.thanks === false) {
 									thank_you.play();
 									data.thanks = true;
