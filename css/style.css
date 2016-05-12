@@ -416,21 +416,31 @@ GAME ELEMENTS
 ************/
 #mute_sound {
 	position: absolute;
-	background-color: yellow;
 	left: 5%;
 	top: 1%;
 	height: 30px;
 	width: 30px;
+	background-color: yellow;
+	background: url(../img/ssound-on.png) no-repeat;
+	background-size: contain;
 	cursor: pointer;
+}
+
+.mute_sound {
+	background: url(../img/ssound-off.png) no-repeat !important;
+	background-size: contain !important;
+	cursor: pointer !important;
 }
 
 #quit_game {
 	position: absolute;
-	background-color: red;
 	left: 95%;
-	top: 1%;
+	top: 1.5%;
 	height: 30px;
 	width: 30px;
+	background-color: red;
+	background: url(../img/exit.svg.png) no-repeat;
+	background-size: contain;
 	cursor: pointer;
 }
 

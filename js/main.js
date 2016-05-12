@@ -86,6 +86,8 @@ AUDIO CONTROLS
 			here_we_go = new Audio("./audio/sm64_mario_here_we_go.wav"),
 			bg_lvl1 = new Audio("./audio/ground-theme.mp3"),
 			bg_lvl2 = new Audio("./audio/13-super-mario-rap.mp3"),
+			bg_lvl3 = new Audio("./audio/30-koopa-s-theme.mp3"),
+			boss_lvl = new Audio("./audio/32-ultimate-koopa.mp3"),
 			lvl_clear = new Audio("./audio/04-area-clear.mp3"),
 			game_clear = new Audio("./audio/04-level-clear.mp3"),
 			power_up = new Audio("./audio/03-power-up.mp3"),
@@ -113,9 +115,15 @@ AUDIO CONTROLS
 	// Used .prop() Instead of .attr() To Determine Node Property Values
 
 // In Game Music Options //
-	var game_mute = function (){
-
-	};
+	var game_mute = $("#mute_sound").on('click', function (){
+		if (now_playing.muted) {
+			now_playing.muted = false;
+			$("#mute_sound").removeClass("mute_sound");
+		} else {
+			now_playing.muted = true;
+			$("#mute_sound").addClass("mute_sound");
+		}
+	});
 
 
 /************
@@ -211,7 +219,7 @@ var play_smcb = function (){
 			level = 1,
 			life = 3,
 			difficulty = 0,
-			clock, time_output, score_output, missile_run, random, pick, fire_missile, val, now_playing;
+			clock, time_output, score_output, missile_run, random, pick, fire_missile, now_playing, val;
 
 // Game Page: Pause Game Button //
 	var pause_game = $("#pause_game").on('click', function(){
@@ -288,11 +296,10 @@ var play_smcb = function (){
 			console.log("Somebody actually won this impossible game. Damn.");
 			setTimeout(function (){
 				$(game_area).off();
+				game_clear.play();
 				setTimeout(function (){
 					var over_logo = $("<div id='game_over'></div>");
 					game_area.append(over_logo);
-					// game_over.play();
-					game_over2.play();
 					setTimeout(function (){
 						$("#game_bg").fadeOut(2000);
 						$("#game_container").fadeOut(2000);
@@ -302,13 +309,16 @@ var play_smcb = function (){
 						$("#back_bg").fadeIn(2000);
 						$("#back_container").fadeIn(2000);
 						setTimeout(function (){
-							endscreen.remove();
-							over_logo.remove();
-							if (data.thanks === false) {
-								thank_you.play();
-								data.thanks = true;
-							}
-						}, 3500);
+							game_over2.play();
+							setTimeout(function (){
+								endscreen.remove();
+								over_logo.remove();
+								if (data.thanks === false) {
+									thank_you.play();
+									data.thanks = true;
+								}
+							}, 2500);
+						}, 1200);
 						return (function(){
 							game_running = false;
 							data.level = level;
@@ -511,7 +521,6 @@ var play_smcb = function (){
 			    		}, 2000);
 			    		hit_points += 1;
 			    		life -= 1;
-			    		console.log("Hit points: " + hit_points)
 			    		if (hit_points >= 3) {
 			    			return filter(true, null);
 			    		}
@@ -577,7 +586,7 @@ var play_smcb = function (){
 		// Level 3 Deployment Model
 		if (lvl === 3) {
 			launch();
-			launch_array = [2, 2, 3, 3, 3, 3, 2];
+			launch_array = [2, 2, 3, 3, 3, 1, 1];
 			return launch_array.forEach(function (e){
 				setTimeout(function (){
 					create_missile(e);
@@ -660,31 +669,39 @@ var play_smcb = function (){
 			console.log("Current Level: " + level);
 			if (now_playing !== bg_lvl1) {
 				now_playing = bg_lvl1;
-				setTimeout(function (){
-					now_playing.play();
-				}, 800);
 			}
+			setTimeout(function (){
+					now_playing.play();
+			}, 1000);
 		}
 		if (deployed === 50) {
 			level = 2;
 			console.log("Level increment achieved.");
 			console.log("Current Level: " + level);
 			if (now_playing !== bg_lvl2) {
-				now_playing.pause();
-				now_playing = bg_lvl2;
+				now_playing.volume -= .5;
 				setTimeout(function (){
-					now_playing.play();
-				}, 800);
+					now_playing.pause();
+					now_playing = bg_lvl2;
+					setTimeout(function (){
+						now_playing.play();
+					}, 1000);
+				}, 2000);
 			}
 		}
 		if ((deployed > 50) && (deployed < 120)) {
 			level = 2;
 			console.log("Current Level: " + level);
 			if (now_playing !== bg_lvl2) {
-				now_playing.pause();
-				now_playing = bg_lvl2;
-				now_playing.load();
-				now_playing.play();
+				now_playing.volume -= .5;
+				setTimeout(function (){
+					now_playing.pause();
+					now_playing = bg_lvl2;
+					now_playing.load();
+					setTimeout(function (){
+						now_playing.play();
+					}, 1000);
+				}, 2000);
 			}
 		}
 
@@ -692,31 +709,35 @@ var play_smcb = function (){
 			level = 3;
 			console.log("Level increment achieved.");
 			console.log("Current Level: " + level)
-			if (now_playing !== bg_lvl1) {
-				now_playing.pause();
-				now_playing = bg_lvl1;
-				now_playing.load();
+			if (now_playing !== bg_lvl3) {
+				now_playing.volume -= .5;
 				setTimeout(function (){
-					bg_lvl1.play();
-				}, 800);
+					now_playing.pause();
+					now_playing = bg_lvl3;
+					setTimeout(function (){
+						now_playing.play();
+					}, 1000);
+				}, 2000);
 			}
 		}
 
 		if ((deployed > 120) && (deployed < 240)) {	
 			level = 3;
 			console.log("Current Level: " + level);
-			if (now_playing !== bg_lvl1) {
-				now_playing.pause();
-				now_playing = bg_lvl1;
-				now_playing.load();
-				now_playing.play();
+			if (now_playing !== bg_lvl3) {
+				now_playing.volume -= .5;
+				setTimeout(function (){
+					now_playing.pause();
+					now_playing = bg_lvl3;
+					now_playing.load();
+					setTimeout(function (){
+						now_playing.play();
+					}, 1000);
+				}, 2000);
 			}
 		}
 
-		if (now_playing.ended) {
-			now_playing.load();
-			now_playing.play();
-		}
+		now_playing.loop = true;
 	return level;
 	};
 
