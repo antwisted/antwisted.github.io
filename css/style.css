@@ -517,7 +517,7 @@ GAME ELEMENTS
 .blk_missile {
 	position: absolute;
 	top: -5%;
-	height: 50px;
+	height: 55px;
 	width: 25px;
 	padding: 0 20px;
 	background: #000;
@@ -528,7 +528,7 @@ GAME ELEMENTS
 .red_missile {
 	position: absolute;
 	top: -30%;
-	height: 50px;
+	height: 55px;
 	width: 25px;
 	padding: 0 20px;
 	background: #ff0000;
