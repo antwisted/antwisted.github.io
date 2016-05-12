@@ -405,10 +405,12 @@ var play_smcb = function (){
 	};
 
 // In Game: Score Function //
-	var score_val = function(score, game_check){
-		val = score.toString();
-		for (var j = 6; val.length < j;) {
-			val = "0" + val;
+	var score_val = function(score){
+		if (score !== 0) {
+			val = score.toString();
+			for (var j = 6; val.length < j;) {
+				val = "0" + val;
+			}
 		}
 
 		if (game_running) {
@@ -521,6 +523,7 @@ var play_smcb = function (){
 			    		}, 2000);
 			    		hit_points += 1;
 			    		life -= 1;
+			    		score_val(0);
 			    		if (hit_points >= 3) {
 			    			return filter(true, null);
 			    		}
