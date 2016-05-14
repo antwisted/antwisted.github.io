@@ -1,0 +1,6 @@
+After first game, Scoring and Clock errors on game replay:
+
+- Explosion doesn't display on Mozilla
+- Change cursor to crosshair
+- Reload level 2 music
+- Add share on FB, Twitter, etc.
