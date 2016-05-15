@@ -182,11 +182,13 @@ BUTTONS
 
 // Back Page: Play Again //
 	var playagain_button = $("#play_again").on('click', function (){
-		$("#back_bg").hide();
-		$("#back_container").hide();
-		$("#game_bg").show();
-		$("#game_container").show();
-		play_smcb();
+		setTimeout(function (){
+			$("#back_bg").hide(); 
+			$("#back_container").hide();
+			$("#game_bg").show();
+			$("#game_container").show();
+			play_smcb();
+		}, 1500);
 	});
 
 
@@ -635,8 +637,8 @@ var play_smcb = function (){
 		var fireball = $("<div class='fireball'></div>");
 		game_area.append(fireball);
 		fireball.animate({
-			left: x+"px",
-			top: y+"px",
+			left: (x-17)+"px",
+			top: (y-17)+"px",
 		}, 200);
 		var f = function(){
 			fireball.animate({
@@ -648,8 +650,8 @@ var play_smcb = function (){
 
 		var boom = $("<div class='explode'></div>");
 		boom.css({
-			"left": x+"px",
-			"top": y+"px",
+			"left": (x-40)+"px",
+			"top": (y-40)+"px",
 			// not working
 			"transform": "translate(-"+(x/2)+"px, -"+(y/2)+"px)"
 		})
@@ -702,6 +704,7 @@ var play_smcb = function (){
 					setTimeout(function (){
 						now_playing.pause();
 						now_playing = bg_lvl2;
+						now_playing.load();
 						now_playing.volume = 1;
 						setTimeout(function (){
 							now_playing.play();
@@ -737,6 +740,7 @@ var play_smcb = function (){
 				setTimeout(function (){
 					now_playing.pause();
 					now_playing = bg_lvl3;
+					now_playing.load();
 					now_playing.volume = 1;
 					setTimeout(function (){
 						now_playing.play();
