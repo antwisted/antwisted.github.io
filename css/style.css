@@ -516,6 +516,7 @@ GAME ELEMENTS
 
 .blk_missile {
 	position: absolute;
+	cursor: crosshair;
 	top: -5%;
 	height: 55px;
 	width: 40px;
@@ -528,6 +529,7 @@ GAME ELEMENTS
 
 .red_missile {
 	position: absolute;
+	cursor: crosshair;
 	top: -30%;
 	height: 55px;
 	width: 40px;
@@ -540,6 +542,7 @@ GAME ELEMENTS
 
 .fire_missile {
 	position: absolute;
+	cursor: crosshair;
 	top: -55%;
 	height: 86px;
 	width: 40px;
