@@ -856,9 +856,9 @@ var play_smcb = function (){
 		if (deployed % 12 === 0 && level === 3) {
 			missile_push(level);
 		};
-		if (data.force4) {
-			filter(null, true);
-		}
+		// if (data.force4) {
+		// 	filter(null, true);
+		// }
 	});
 	
 // End play_scmb() //
