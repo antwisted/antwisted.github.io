@@ -868,4 +868,4 @@ var play_smcb = function (){
 // End (document).ready() //
 });
 // Game Status Monitor and Record Data Object
-var data = { game_running: false, level: 1, time: 0, score: 0, hscore: 0, thanks: false, force3: false, force4: false };
+var data = { game_running: false, level: 1, time: 0, score: 0, hscore: 0, thanks: false, force3: false };
