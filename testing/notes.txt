@@ -1,6 +1,13 @@
 After first game, Scoring and Clock errors on game replay:
 
 - Explosion doesn't display on Mozilla
-- Change cursor to crosshair
-- Reload level 2 music
+- Retry stop animation movement for explosions
+- Progressive z-index needed
+- Fades on 'play again' not working
+- 'Play again' after win causes screen errors
+- Occasional double instances of scmb after first play
+
+REACH:
+- Collision detection back on the table
+- Consider music transition to 'endless wave'
 - Add share on FB, Twitter, etc.
