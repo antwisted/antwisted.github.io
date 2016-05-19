@@ -182,11 +182,12 @@ BUTTONS
 
 // Back Page: Play Again //
 	var playagain_button = $("#play_again").on('click', function (){
+		life_up.play();
 		setTimeout(function (){
-			$("#back_bg").hide(); 
-			$("#back_container").hide();
-			$("#game_bg").show();
-			$("#game_container").show();
+			$("#back_bg").fadeOut(1200); 
+			$("#back_container").fadeOut(1200);
+			$("#game_bg").fadeIn(2000);
+			$("#game_container").fadeIn(2000);
 			play_smcb();
 		}, 1500);
 	});
@@ -222,7 +223,7 @@ var play_smcb = function (){
 			level = 1,
 			life = 3,
 			difficulty = 0,
-			clock, time_output, score_output, missile_run, random, pick, fire_missile, val;
+			clock, time_output, random, pick, val;
 
 // Game Page: Pause Game Button //
 	var pause_game = $("#pause_game").on('click', function(){
@@ -238,7 +239,7 @@ var play_smcb = function (){
 			console.log("User quit option: " + exit);
 			return data.game_running = true;
 		}
-	}
+	};
 
 	var filter = function (lose, win){
 		filter_check++;
@@ -315,10 +316,10 @@ var play_smcb = function (){
 				difficulty--;
 			}
 			yahoo.play();
-			var winscreen = $("<div id='blk_end'></div>");
+			var winscreen = $("<div id='blk_win'></div>");
 			game_area.append(winscreen);
-			winscreen.animate({opacity: .6}, 4000);
-			console.log("Somebody actually won this impossible game. Damn.");
+			winscreen.fadeIn(4000);
+			console.log("Congratulations on the win!");
 			setTimeout(function (){
 				$(game_area).off();
 				game_clear.play();
@@ -336,6 +337,7 @@ var play_smcb = function (){
 						setTimeout(function (){
 							game_over2.play();
 							over_logo.remove();
+							winscreen.remove();
 							setTimeout(function (){
 								if (data.thanks === false) {
 									thank_you.play();
@@ -664,9 +666,7 @@ var play_smcb = function (){
 		var boom = $("<div class='explode'></div>");
 		boom.css({
 			"left": (x-40)+"px",
-			"top": (y-40)+"px",
-			// not working
-			"transform": "translate(-"+(x/2)+"px, -"+(y/2)+"px)"
+			"top": (y-40)+"px"
 		})
 		setTimeout(function (){
 			game_area.append(boom)
@@ -713,20 +713,26 @@ var play_smcb = function (){
 				console.log("Level increment achieved.");
 				console.log("Current Level: " + level);
 				if (now_playing !== bg_lvl2) {
-					now_playing.volume = .75;
+					now_playing.volume = .5;
 					setTimeout(function (){
-						now_playing.volume = .5;
-						setTimeout(function (){
-							now_playing.volume = .25;
+						now_playing.volume = .4;
+						setTimeout(function (){				
+							now_playing.volume = .3;
 							setTimeout(function (){
-								now_playing.pause();
-								now_playing = bg_lvl2;
-								now_playing.load();
-								now_playing.volume = 1;
+								now_playing.volume = .2;
 								setTimeout(function (){
-									now_playing.play();
-								}, 1000);
-							}, 2000);
+									now_playing.volume = .1;
+									setTimeout(function (){
+										now_playing.pause();
+										now_playing = bg_lvl2;
+										now_playing.load();
+										now_playing.volume = 1;
+										setTimeout(function (){
+											now_playing.play();
+										}, 1000);
+									}, 2000);
+								}, 750);
+							}, 750);
 						}, 750);
 					}, 750);
 				}
@@ -736,20 +742,26 @@ var play_smcb = function (){
 				level = 2;
 				console.log("Current Level: " + level);
 				if (now_playing !== bg_lvl2) {
-					now_playing.volume = .75;
+					now_playing.volume = .5;
 					setTimeout(function (){
-						now_playing.volume = .5;
-						setTimeout(function (){
-							now_playing.volume = .25;
+						now_playing.volume = .4;
+						setTimeout(function (){				
+							now_playing.volume = .3;
 							setTimeout(function (){
-								now_playing.pause();
-								now_playing = bg_lvl2;
-								now_playing.load();
-								now_playing.volume = 1;
+								now_playing.volume = .2;
 								setTimeout(function (){
-									now_playing.play();
-								}, 1000);
-							}, 2000);
+									now_playing.volume = .1;
+									setTimeout(function (){
+										now_playing.pause();
+										now_playing = bg_lvl2;
+										now_playing.load();
+										now_playing.volume = 1;
+										setTimeout(function (){
+											now_playing.play();
+										}, 1000);
+									}, 2000);
+								}, 750);
+							}, 750);
 						}, 750);
 					}, 750);
 				}
@@ -761,20 +773,26 @@ var play_smcb = function (){
 			console.log("Level increment achieved.");
 			console.log("Current Level: " + level)
 			if (now_playing !== bg_lvl3) {
-				now_playing.volume = .75;
+				now_playing.volume = .5;
 				setTimeout(function (){
-					now_playing.volume = .5;
-					setTimeout(function (){
-						now_playing.volume = .25;
+					now_playing.volume = .4;
+					setTimeout(function (){				
+						now_playing.volume = .3;
 						setTimeout(function (){
-							now_playing.pause();
-							now_playing = bg_lvl3;
-							now_playing.load();
-							now_playing.volume = 1;
+							now_playing.volume = .2;
 							setTimeout(function (){
-								now_playing.play();
-							}, 1000);
-						}, 2000);
+								now_playing.volume = .1;
+								setTimeout(function (){
+									now_playing.pause();
+									now_playing = bg_lvl3;
+									now_playing.load();
+									now_playing.volume = 1;
+									setTimeout(function (){
+										now_playing.play();
+									}, 1000);
+								}, 2000);
+							}, 750);
+						}, 750);
 					}, 750);
 				}, 750);
 			}
@@ -784,20 +802,26 @@ var play_smcb = function (){
 			level = 3;
 			console.log("Current Level: " + level);
 			if (now_playing !== bg_lvl3) {
-				now_playing.volume = .75;
+				now_playing.volume = .5;
 				setTimeout(function (){
-					now_playing.volume = .5;
-					setTimeout(function (){
-						now_playing.volume = .25;
+					now_playing.volume = .4;
+					setTimeout(function (){				
+						now_playing.volume = .3;
 						setTimeout(function (){
-							now_playing.pause();
-							now_playing = bg_lvl3;
-							now_playing.load();
-							now_playing.volume = 1;
+							now_playing.volume = .2;
 							setTimeout(function (){
-								now_playing.play();
-							}, 1000);
-						}, 2000);
+								now_playing.volume = .1;
+								setTimeout(function (){
+									now_playing.pause();
+									now_playing = bg_lvl2;
+									now_playing.load();
+									now_playing.volume = 1;
+									setTimeout(function (){
+										now_playing.play();
+									}, 1000);
+								}, 2000);
+							}, 750);
+						}, 750);
 					}, 750);
 				}, 750);
 			}
@@ -832,13 +856,16 @@ var play_smcb = function (){
 		if (deployed % 12 === 0 && level === 3) {
 			missile_push(level);
 		};
+		if (data.force4) {
+			filter(null, true);
+		}
 	});
 	
 // End play_scmb() //
-	}
+	}.bind(this);
 // End game_start() //
 	}
 // End (document).ready() //
 });
 // Game Status Monitor and Record Data Object
-var data = { game_running: false, level: 1, time: 0, score: 0, hscore: 0, thanks: false, force3: false };
+var data = { game_running: false, level: 1, time: 0, score: 0, hscore: 0, thanks: false, force3: false, force4: false };

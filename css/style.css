@@ -122,7 +122,7 @@ PAGE ELEMENTS
 	bottom: 2.2rem; /* 37px */
 }
 
-#blk_begin {
+#blk_begin, #blk_end, #blk_win {
 	position: fixed;
 	margin: 0;
 	padding: 0;
@@ -133,14 +133,12 @@ PAGE ELEMENTS
 }
 
 #blk_end {
-	position: fixed;
-	margin: 0;
-	padding: 0;
-	min-width: 100%;
-	min-height: 100%;
-	background: #000000;
-	z-index: 20000;
 	animation: endFade 4s linear; 
+}
+
+#blk_win {
+	display: none;
+	background: rgba(0,0,0,0.6);
 }
 
 #antwisted {
@@ -517,7 +515,7 @@ GAME ELEMENTS
 .blk_missile {
 	position: absolute;
 	cursor: crosshair;
-	top: -5%;
+	top: -10%;
 	height: 55px;
 	width: 40px;
 	padding: 18px;
@@ -702,7 +700,7 @@ ANIMATIONS
 ************/
 @keyframes slidedown {
 	from {
-		top: -5%;
+		top: -10%;
 	}
 	to {
 		top: 45%;
@@ -741,7 +739,7 @@ ANIMATIONS
 
 @keyframes over_bounce {
 	0% {
-		top: -5%;
+		top: -10%;
 	}
 	90% {
 		top: 50%;
